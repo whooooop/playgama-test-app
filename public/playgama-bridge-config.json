@@ -1,0 +1,50 @@
+{
+  "platforms": {
+    "game_distribution": {
+      "gameId": ""
+    },
+    "telegram": {
+      "adsgramBlockId": ""
+    },
+    "y8": {
+      "gameId": "",
+      "adsenseId": "",
+      "channelId": ""
+    },
+    "lagged": {
+      "devId": "",
+      "publisherId": ""
+    },
+    "msn": {
+      "gameId": ""
+    },
+    "discord": {
+      "appId": ""
+    },
+    "gamepush": {
+      "projectId": "",
+      "publicToken": ""
+    }
+  },
+  "advertisement": {
+    "interstitial": {
+      "preloadOnStart": true
+    },
+    "rewarded": {
+      "preloadOnStart": true
+    },
+    "useBuiltInErrorPopup": true,
+    "backfillId": ""
+  },
+  "payments": [
+    {
+      "id": "1",
+      "name": "1000 Gam",
+      "price": "1000",
+      "priceCurrencyCode": "Gam",
+      "priceCurrencyImage": "https://games.playgama.com/assets/gold-fennec-coin-large.webp",
+      "priceValue": 1000
+    }
+  ],
+  "leaderboards": []
+}

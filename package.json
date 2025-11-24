@@ -1,0 +1,29 @@
+{
+  "name": "vue-game-test",
+  "version": "1.0.0",
+  "description": "Простое Vue 3 приложение для тестирования игры",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/create-dist-zip.js",
+    "build:zip": "node scripts/create-dist-zip.js",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@iconify/vue": "^5.0.0",
+    "@vueuse/core": "^14.0.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "archiver": "^7.0.1",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-vue": "^9.15.0",
+    "prettier": "^3.0.0",
+    "vite": "^4.4.5"
+  }
+}
