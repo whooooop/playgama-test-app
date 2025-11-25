@@ -1,6 +1,6 @@
 <template>
   <Section title="Storage">
-    <div class="info-grid">
+    <InfoGrid>
       <InfoItem
         label="Is LocalStorage Supported:"
         :value="isLocalStorageSupported"
@@ -17,7 +17,7 @@
         label="Is PlatformInternal Available:"
         :value="isPlatformInternalAvailable"
       />
-    </div>
+    </InfoGrid>
 
     <div class="storage-actions">
       <div class="input-group">
@@ -33,9 +33,9 @@
       </div>
 
       <div class="button-group">
-        <button @click="getStorageData">Get Data</button>
-        <button @click="setStorageData">Set Data</button>
-        <button @click="deleteStorageData">Delete Data</button>
+        <Button @click="getStorageData">Get Data</Button>
+        <Button @click="setStorageData">Set Data</Button>
+        <Button @click="deleteStorageData">Delete Data</Button>
       </div>
 
       <div v-if="storageStatus" class="status-message">
@@ -44,36 +44,32 @@
     </div>
 
     <!-- Single Key Operations -->
-    <div class="single-key-section">
-      <h3>Single Key Operations</h3>
-
+    <SubSection title="Single Key Operations">
       <div class="input-group">
         <input v-model="singleKey" type="text" placeholder="Key" />
         <input v-model="singleValue" type="text" placeholder="Value" />
       </div>
 
       <div class="button-group">
-        <button @click="getSingleKey" :disabled="!singleKey">
+        <Button @click="getSingleKey" :disabled="!singleKey">
           Get Single Key
-        </button>
-        <button @click="setSingleKey" :disabled="!singleKey">
+        </Button>
+        <Button @click="setSingleKey" :disabled="!singleKey">
           Set Single Key
-        </button>
-        <button @click="deleteSingleKey" :disabled="!singleKey">
+        </Button>
+        <Button @click="deleteSingleKey" :disabled="!singleKey">
           Delete Single Key
-        </button>
+        </Button>
       </div>
 
       <div v-if="singleKeyResult" class="result-display">
         <strong>Single Key Result:</strong>
-        <pre>{{ singleKeyResult }}</pre>
+        <CodeBlock>{{ singleKeyResult }}</CodeBlock>
       </div>
-    </div>
+    </SubSection>
 
     <!-- Multiple Keys Operations -->
-    <div class="multiple-keys-section">
-      <h3>Multiple Keys Operations</h3>
-
+    <SubSection title="Multiple Keys Operations">
       <div class="input-group">
         <input
           v-model="multipleKeys"
@@ -91,22 +87,22 @@
       </div>
 
       <div class="button-group">
-        <button @click="getMultipleKeys" :disabled="!multipleKeys">
+        <Button @click="getMultipleKeys" :disabled="!multipleKeys">
           Get Multiple Keys
-        </button>
-        <button @click="setMultipleKeys" :disabled="!multipleKeys">
+        </Button>
+        <Button @click="setMultipleKeys" :disabled="!multipleKeys">
           Set Multiple Keys
-        </button>
-        <button @click="deleteMultipleKeys" :disabled="!multipleKeys">
+        </Button>
+        <Button @click="deleteMultipleKeys" :disabled="!multipleKeys">
           Delete Multiple Keys
-        </button>
+        </Button>
       </div>
 
       <div v-if="multipleKeysResult" class="result-display">
         <strong>Multiple Keys Result:</strong>
-        <pre>{{ multipleKeysResult }}</pre>
+        <CodeBlock>{{ multipleKeysResult }}</CodeBlock>
       </div>
-    </div>
+    </SubSection>
   </Section>
 </template>
 
@@ -114,6 +110,10 @@
 import { ref, computed, watch } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import SubSection from '../components/SubSection.vue';
+import Button from '../components/Button.vue';
+import CodeBlock from '../components/CodeBlock.vue';
+import InfoGrid from '../components/InfoGrid.vue';
 
 // Extend Window interface for bridge
 declare global {
@@ -378,15 +378,6 @@ watch(
 </script>
 
 <style scoped>
-/* Section styles moved to Section component */
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
 .storage-actions {
   margin: 24px 0;
   padding: 20px;
@@ -469,38 +460,6 @@ watch(
   flex-wrap: wrap;
 }
 
-button {
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-  letter-spacing: -0.01em;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-}
-
-button:disabled {
-  background: #adb5bd;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  opacity: 0.6;
-}
-
 .status-message {
   padding: 12px 16px;
   background: var(--bg-primary);
@@ -516,19 +475,6 @@ button:disabled {
 .status-message strong {
   color: var(--text-primary);
   font-weight: 600;
-}
-
-.single-key-section,
-.multiple-keys-section {
-  margin: 24px 0;
-  padding: 20px;
-  background: var(--bg-primary);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
 }
 
 .result-display {
@@ -547,58 +493,8 @@ button:disabled {
   font-size: 14px;
 }
 
-.result-display pre {
-  background: var(--code-bg);
-  color: var(--code-text);
-  padding: 16px;
-  border-radius: 12px;
-  overflow-x: auto;
-  font-size: 13px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-  max-height: 300px;
-  overflow-y: auto;
-  line-height: 1.6;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--code-border);
-  margin: 8px 0 0 0;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-/* Smooth scrolling */
-pre::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-pre::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-pre::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-pre::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .section {
-    padding: 20px;
-    margin: 16px 0;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
   .input-group {
     flex-direction: column;
   }

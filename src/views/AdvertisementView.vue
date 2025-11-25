@@ -1,6 +1,6 @@
 <template>
   <Section title="Advertisement">
-    <div class="info-grid">
+    <InfoGrid>
       <InfoItem label="Is Banner Supported:" :value="isBannerSupported" />
       <InfoItem
         label="Is Interstitial Supported:"
@@ -8,79 +8,72 @@
       />
       <InfoItem label="Is Rewarded Supported:" :value="isRewardedSupported" />
       <InfoItem label="Is AdBlock Detected:" :value="isAdBlockDetected" />
-    </div>
+    </InfoGrid>
 
     <!-- Minimum Delay Between Interstitial -->
-    <div class="delay-section">
-      <h3>Minimum Delay Between Interstitial</h3>
-      <p class="description">
-        Sets the minimum time delay (in milliseconds) between showing
-        interstitial ads. This prevents showing ads too frequently and improves
-        user experience.
-      </p>
+    <SubSection
+      title="Minimum Delay Between Interstitial"
+      description="Sets the minimum time delay (in milliseconds) between showing interstitial ads. This prevents showing ads too frequently and improves user experience."
+    >
       <div class="input-group">
         <input
           v-model="minimumDelayInput"
           type="text"
           placeholder="Minimum Delay Between Interstitial (ms)"
         />
-        <button @click="setMinimumDelay">Set Minimum Delay</button>
+        <Button @click="setMinimumDelay">Set Minimum Delay</Button>
       </div>
-    </div>
+    </SubSection>
 
     <!-- Banner Section -->
-    <div class="ad-section">
-      <h3>Banner</h3>
-      <div class="info-grid">
+    <SubSection title="Banner">
+      <InfoGrid>
         <InfoItem label="Last Banner States:" :value="bannerStates" />
-      </div>
+      </InfoGrid>
       <div class="button-group">
-        <button @click="showBanner" :disabled="!isBannerSupported">
+        <Button @click="showBanner" :disabled="!isBannerSupported">
           Show Banner
-        </button>
-        <button @click="hideBanner" :disabled="!isBannerSupported">
+        </Button>
+        <Button @click="hideBanner" :disabled="!isBannerSupported">
           Hide Banner
-        </button>
+        </Button>
       </div>
-    </div>
+    </SubSection>
 
     <!-- Interstitial Section -->
-    <div class="ad-section">
-      <h3>Interstitial</h3>
-      <div class="info-grid">
+    <SubSection title="Interstitial">
+      <InfoGrid>
         <InfoItem
           label="Last Interstitial States:"
           :value="interstitialStates"
         />
-      </div>
+      </InfoGrid>
       <div class="button-group">
-        <button @click="showInterstitial" :disabled="!isInterstitialSupported">
+        <Button @click="showInterstitial" :disabled="!isInterstitialSupported">
           Show Interstitial
-        </button>
+        </Button>
       </div>
-    </div>
+    </SubSection>
 
     <!-- Rewarded Section -->
-    <div class="ad-section">
-      <h3>Rewarded</h3>
-      <div class="info-grid">
+    <SubSection title="Rewarded">
+      <InfoGrid>
         <InfoItem label="Last Rewarded States:" :value="rewardedStates" />
         <InfoItem label="Rewarded Placement:" :value="rewardedPlacement" />
-      </div>
+      </InfoGrid>
       <div class="button-group">
-        <button @click="showRewarded" :disabled="!isRewardedSupported">
+        <Button @click="showRewarded" :disabled="!isRewardedSupported">
           Show Rewarded
-        </button>
+        </Button>
       </div>
-    </div>
+    </SubSection>
 
     <!-- AdBlock Detection -->
-    <div class="ad-section">
-      <h3>AdBlock Detection</h3>
+    <SubSection title="AdBlock Detection">
       <div class="button-group">
-        <button @click="checkAdBlock">Is AdBlock Detected</button>
+        <Button @click="checkAdBlock">Is AdBlock Detected</Button>
       </div>
-    </div>
+    </SubSection>
   </Section>
 </template>
 
@@ -88,6 +81,9 @@
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import SubSection from '../components/SubSection.vue';
+import Button from '../components/Button.vue';
+import InfoGrid from '../components/InfoGrid.vue';
 
 declare global {
   interface Window {
@@ -305,35 +301,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Section styles moved to Section component */
-
-.description {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin: 0 0 16px 0;
-  line-height: 1.5;
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.delay-section,
-.ad-section {
-  margin: 24px 0;
-  padding: 20px;
-  background: var(--bg-primary);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
 .input-group {
   display: flex;
   gap: 12px;
@@ -370,50 +337,7 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
-button {
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-  letter-spacing: -0.01em;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-}
-
-button:disabled {
-  background: #adb5bd;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  opacity: 0.6;
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-  .section {
-    padding: 20px;
-    margin: 16px 0;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
   .input-group {
     flex-direction: column;
   }

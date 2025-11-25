@@ -1,8 +1,8 @@
 <template>
   <Section title="Game">
-    <div class="info-grid">
+    <InfoGrid>
       <InfoItem label="Visibility States:" :value="visibilityStates" />
-    </div>
+    </InfoGrid>
   </Section>
 </template>
 
@@ -10,6 +10,7 @@
 import { ref, computed, watch } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import InfoGrid from '../components/InfoGrid.vue';
 
 // Extend Window interface for bridge
 declare global {
@@ -66,27 +67,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<style scoped>
-/* Section styles moved to Section component */
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .section {
-    padding: 20px;
-    margin: 16px 0;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-}
-</style>

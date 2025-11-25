@@ -1,6 +1,6 @@
 <template>
   <Section title="Platform">
-    <div class="info-grid">
+    <InfoGrid>
       <InfoItem label="ID:" :value="id" />
       <InfoItem label="Language:" :value="language" />
       <InfoItem label="Payload:" :value="payload" />
@@ -15,38 +15,38 @@
         label="Get Game By ID Supported:"
         :value="isGetGameByIdSupported"
       />
-    </div>
+    </InfoGrid>
 
     <div class="actions">
-      <button @click="getServerTime">Get Server Time</button>
+      <Button @click="getServerTime">Get Server Time</Button>
     </div>
 
     <div class="message-section">
       <InfoItem label="Send Message Status:" :value="messageStatus" />
       <div class="input-group">
         <input v-model="messageText" type="text" placeholder="Message" />
-        <button @click="sendMessage" :disabled="!messageText">
+        <Button @click="sendMessage" :disabled="!messageText">
           Send Message
-        </button>
+        </Button>
       </div>
     </div>
 
     <div class="games-section" v-if="isGetAllGamesSupported">
       <div class="games-container">
         <p><strong>All Games:</strong></p>
-        <pre>{{ allGames }}</pre>
-        <button @click="getAllGames">Get All Games</button>
+        <CodeBlock>{{ allGames }}</CodeBlock>
+        <Button @click="getAllGames">Get All Games</Button>
       </div>
     </div>
 
     <div class="game-by-id-section" v-if="isGetGameByIdSupported">
       <div class="input-group">
         <input v-model="gameId" type="text" placeholder="Game ID" />
-        <button @click="getGameById" :disabled="!gameId">Get Game By ID</button>
+        <Button @click="getGameById" :disabled="!gameId">Get Game By ID</Button>
       </div>
       <div class="game-container">
         <p><strong>Game Data:</strong></p>
-        <pre>{{ gameData }}</pre>
+        <CodeBlock>{{ gameData }}</CodeBlock>
       </div>
     </div>
   </Section>
@@ -56,6 +56,9 @@
 import { ref, watch, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import Button from '../components/Button.vue';
+import CodeBlock from '../components/CodeBlock.vue';
+import InfoGrid from '../components/InfoGrid.vue';
 
 // Extend Window interface for bridge
 declare global {
@@ -141,15 +144,6 @@ watch(
 </script>
 
 <style scoped>
-/* Section styles moved to Section component */
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
 .actions {
   margin: 24px 0;
 }
@@ -189,38 +183,6 @@ watch(
   opacity: 0.8;
 }
 
-button {
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-  letter-spacing: -0.01em;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-}
-
-button:disabled {
-  background: #adb5bd;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  opacity: 0.6;
-}
-
 .message-section,
 .games-section,
 .game-by-id-section {
@@ -248,25 +210,6 @@ button:disabled {
   font-size: 16px;
 }
 
-pre {
-  background: var(--code-bg);
-  color: var(--code-text);
-  padding: 16px;
-  border-radius: 12px;
-  overflow-x: auto;
-  font-size: 13px;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-  max-height: 300px;
-  overflow-y: auto;
-  line-height: 1.6;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--code-border);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease;
-}
-
 .games-container button,
 .game-container button {
   margin-top: 12px;
@@ -288,37 +231,8 @@ pre {
   color: #4caf50;
 }
 
-/* Smooth scrolling */
-pre::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-pre::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-}
-
-pre::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-pre::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* Responsive adjustments */
 @media (max-width: 768px) {
-  .section {
-    padding: 20px;
-    margin: 16px 0;
-  }
-
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+  /* InfoGrid responsive styles moved to InfoGrid component */
 
   .input-group {
     flex-direction: column;

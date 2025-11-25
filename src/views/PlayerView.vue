@@ -1,22 +1,22 @@
 <template>
   <Section title="Player">
-    <div class="info-grid">
+    <InfoGrid>
       <InfoItem
         label="Is Authorization Supported:"
         :value="bridge.player?.isAuthorizationSupported ?? null"
       />
-    </div>
+    </InfoGrid>
     <template v-if="bridge.player?.isAuthorizationSupported">
-      <div class="info-grid">
+      <InfoGrid>
         <InfoItem label="Is Authorized:" :value="player.isAuthorized" />
         <InfoItem label="ID:" :value="player.id" />
         <InfoItem label="Name:" :value="player.name" />
         <InfoItem label="Photos:" :value="player.photosString" />
-      </div>
+      </InfoGrid>
 
-      <div class="info-grid">
+      <InfoGrid>
         <InfoItem label="Extra:" :value="player.extra" />
-      </div>
+      </InfoGrid>
 
       <div class="photos-grid">
         <img v-for="photo in player.photos" :src="photo" alt="Player Photo" />
@@ -29,7 +29,7 @@
             Yandex: Authorization Scopes
           </label>
         </div>
-        <button @click="authorizePlayer">Authorize</button>
+        <Button @click="authorizePlayer">Authorize</Button>
       </div>
     </template>
   </Section>
@@ -39,6 +39,8 @@
 import { ref, onMounted, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import Button from '../components/Button.vue';
+import InfoGrid from '../components/InfoGrid.vue';
 
 declare global {
   interface Window {
@@ -90,15 +92,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Section styles moved to Section component */
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
 .photos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -142,45 +135,5 @@ onMounted(() => {
   cursor: pointer;
   accent-color: #667eea;
   border-radius: 4px;
-}
-
-button {
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-  letter-spacing: -0.01em;
-}
-
-button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-button:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
-}
-
-button:disabled {
-  background: #adb5bd;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  opacity: 0.6;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .info-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
 }
 </style>
