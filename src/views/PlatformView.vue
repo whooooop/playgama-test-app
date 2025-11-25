@@ -1,6 +1,5 @@
 <template>
-  <div class="section">
-    <h2>Platform</h2>
+  <Section title="Platform">
     <div class="info-grid">
       <InfoItem label="ID:" :value="id" />
       <InfoItem label="Language:" :value="language" />
@@ -50,12 +49,13 @@
         <pre>{{ gameData }}</pre>
       </div>
     </div>
-  </div>
+  </Section>
 </template>
 
 <script setup lang="ts">
 import { ref, watch, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
+import Section from '../components/Section.vue';
 
 // Extend Window interface for bridge
 declare global {
@@ -141,37 +141,7 @@ watch(
 </script>
 
 <style scoped>
-/* Modern styling inspired by 21st.dev */
-.section {
-  background: white;
-  padding: 32px;
-  margin: 20px 0;
-  border-radius: 16px;
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.02),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
-}
-
-.section:hover {
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.06),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-}
-
-.section h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 24px 0;
-  letter-spacing: -0.01em;
-}
+/* Section styles moved to Section component */
 
 .info-grid {
   display: grid;
@@ -194,10 +164,11 @@ watch(
 .input-group input {
   flex: 1;
   padding: 12px 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   font-size: 14px;
-  background: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   transition: all 0.2s ease;
   outline: none;
 }
@@ -208,13 +179,13 @@ watch(
 }
 
 .input-group input:disabled {
-  background: #f8f9fa;
+  background: var(--bg-primary);
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 .input-group input::placeholder {
-  color: #adb5bd;
+  color: var(--text-secondary);
   opacity: 0.8;
 }
 
@@ -255,10 +226,13 @@ button:disabled {
 .game-by-id-section {
   margin: 24px 0;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--bg-primary);
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .games-container,
@@ -270,13 +244,13 @@ button:disabled {
 .game-container p {
   margin: 0 0 12px 0;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-size: 16px;
 }
 
 pre {
-  background: #1a1a1a;
-  color: #e9ecef;
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 16px;
   border-radius: 12px;
   overflow-x: auto;
@@ -286,7 +260,11 @@ pre {
   overflow-y: auto;
   line-height: 1.6;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--code-border);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .games-container button,
@@ -304,6 +282,10 @@ pre {
 .message-section :deep(.value) {
   font-weight: 500;
   color: #28a745;
+}
+
+.dark .message-section :deep(.value) {
+  color: #4caf50;
 }
 
 /* Smooth scrolling */

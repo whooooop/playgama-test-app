@@ -1,7 +1,5 @@
 <template>
-  <div class="section">
-    <h2>Storage</h2>
-
+  <Section title="Storage">
     <div class="info-grid">
       <InfoItem
         label="Is LocalStorage Supported:"
@@ -109,12 +107,13 @@
         <pre>{{ multipleKeysResult }}</pre>
       </div>
     </div>
-  </div>
+  </Section>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
+import Section from '../components/Section.vue';
 
 // Extend Window interface for bridge
 declare global {
@@ -379,45 +378,7 @@ watch(
 </script>
 
 <style scoped>
-/* Modern styling inspired by 21st.dev */
-.section {
-  background: white;
-  padding: 32px;
-  margin: 20px 0;
-  border-radius: 16px;
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.02),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
-}
-
-.section:hover {
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.06),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-}
-
-.section h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 24px 0;
-  letter-spacing: -0.01em;
-}
-
-.section h3 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 16px 0;
-  letter-spacing: -0.01em;
-}
+/* Section styles moved to Section component */
 
 .info-grid {
   display: grid;
@@ -429,10 +390,13 @@ watch(
 .storage-actions {
   margin: 24px 0;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--bg-primary);
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .input-group {
@@ -445,10 +409,11 @@ watch(
 .input-group input {
   flex: 1;
   padding: 12px 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   font-size: 14px;
-  background: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   transition: all 0.2s ease;
   outline: none;
 }
@@ -459,13 +424,13 @@ watch(
 }
 
 .input-group input:disabled {
-  background: #f8f9fa;
+  background: var(--bg-primary);
   cursor: not-allowed;
   opacity: 0.6;
 }
 
 .input-group input::placeholder {
-  color: #adb5bd;
+  color: var(--text-secondary);
   opacity: 0.8;
 }
 
@@ -475,9 +440,10 @@ watch(
 
 .select-group select {
   padding: 12px 16px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
-  background: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   min-width: 200px;
   font-size: 14px;
   cursor: pointer;
@@ -491,7 +457,7 @@ watch(
 }
 
 .select-group select:disabled {
-  background: #f8f9fa;
+  background: var(--bg-primary);
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -537,14 +503,18 @@ button:disabled {
 
 .status-message {
   padding: 12px 16px;
-  background: #e9ecef;
+  background: var(--bg-primary);
   border-radius: 12px;
   font-size: 14px;
   margin-top: 16px;
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .status-message strong {
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -552,30 +522,34 @@ button:disabled {
 .multiple-keys-section {
   margin: 24px 0;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--bg-primary);
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .result-display {
   margin-top: 16px;
   padding: 16px;
-  background: #f8f9fa;
+  background: var(--bg-primary);
   border-radius: 12px;
+  transition: background-color 0.3s ease;
 }
 
 .result-display strong {
   display: block;
   margin-bottom: 8px;
-  color: #1a1a1a;
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 14px;
 }
 
 .result-display pre {
-  background: #1a1a1a;
-  color: #e9ecef;
+  background: var(--code-bg);
+  color: var(--code-text);
   padding: 16px;
   border-radius: 12px;
   overflow-x: auto;
@@ -585,8 +559,12 @@ button:disabled {
   overflow-y: auto;
   line-height: 1.6;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--code-border);
   margin: 8px 0 0 0;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 /* Smooth scrolling */

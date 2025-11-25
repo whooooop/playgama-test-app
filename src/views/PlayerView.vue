@@ -1,6 +1,5 @@
 <template>
-  <div class="section">
-    <h2>Player</h2>
+  <Section title="Player">
     <div class="info-grid">
       <InfoItem
         label="Is Authorization Supported:"
@@ -33,12 +32,13 @@
         <button @click="authorizePlayer">Authorize</button>
       </div>
     </template>
-  </div>
+  </Section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
+import Section from '../components/Section.vue';
 
 declare global {
   interface Window {
@@ -90,37 +90,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Modern styling inspired by 21st.dev */
-.section {
-  background: white;
-  padding: 32px;
-  margin: 20px 0;
-  border-radius: 16px;
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.02),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-  transition:
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
-}
-
-.section:hover {
-  box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.06),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px rgba(0, 0, 0, 0.04);
-}
-
-.section h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 24px 0;
-  letter-spacing: -0.01em;
-}
+/* Section styles moved to Section component */
 
 .info-grid {
   display: grid;
@@ -139,10 +109,13 @@ onMounted(() => {
 .actions {
   margin: 24px 0;
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  background: var(--bg-primary);
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .checkbox-group {
@@ -155,12 +128,12 @@ onMounted(() => {
   gap: 8px;
   cursor: pointer;
   font-size: 14px;
-  color: #495057;
+  color: var(--text-secondary);
   user-select: none;
 }
 
 .checkbox-group label:hover {
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 .checkbox {
@@ -205,11 +178,6 @@ button:disabled {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .section {
-    padding: 20px;
-    margin: 16px 0;
-  }
-
   .info-grid {
     grid-template-columns: 1fr;
     gap: 12px;
