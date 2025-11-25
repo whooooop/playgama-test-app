@@ -60,7 +60,6 @@ import Button from '../components/Button.vue';
 import CodeBlock from '../components/CodeBlock.vue';
 import InfoGrid from '../components/InfoGrid.vue';
 
-// Extend Window interface for bridge
 declare global {
   interface Window {
     bridge?: any;
@@ -132,15 +131,6 @@ const getGameById = async () => {
     gameData.value = 'Error: ' + error.message;
   }
 };
-
-// Initialize when bridge becomes available
-watch(
-  () => window.bridge,
-  () => {
-    // Computed properties will automatically update
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped>

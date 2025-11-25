@@ -53,17 +53,4 @@ const initializeGame = () => {
     visibilityStates.value = 'Error: ' + error.message;
   }
 };
-
-// Watch for bridge availability
-watch(
-  () => window.bridge,
-  newBridge => {
-    if (newBridge) {
-      initializeGame();
-    } else {
-      visibilityStates.value = '';
-    }
-  },
-  { immediate: true }
-);
 </script>

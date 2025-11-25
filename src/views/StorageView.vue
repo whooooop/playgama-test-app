@@ -19,7 +19,7 @@
       />
     </InfoGrid>
 
-    <div class="storage-actions">
+    <SubSection title="Storage Actions">
       <div class="input-group">
         <input v-model="coinsValue" type="text" placeholder="Coins" />
         <input v-model="levelValue" type="text" placeholder="Level" />
@@ -41,7 +41,7 @@
       <div v-if="storageStatus" class="status-message">
         <strong>Status:</strong> {{ storageStatus }}
       </div>
-    </div>
+    </SubSection>
 
     <!-- Single Key Operations -->
     <SubSection title="Single Key Operations">
@@ -366,30 +366,9 @@ const deleteMultipleKeys = async () => {
     multipleKeysResult.value = 'Error: ' + error.message;
   }
 };
-
-// Watch for bridge availability
-watch(
-  () => window.bridge,
-  () => {
-    // Computed properties will automatically update
-  },
-  { immediate: true }
-);
 </script>
 
 <style scoped>
-.storage-actions {
-  margin: 24px 0;
-  padding: 20px;
-  background: var(--bg-primary);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
 .input-group {
   display: flex;
   gap: 12px;

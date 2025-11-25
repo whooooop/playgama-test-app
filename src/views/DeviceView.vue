@@ -27,13 +27,4 @@ const deviceType = computed(() => {
   if (!bridge.value?.device?.type) return null;
   return bridge.value.device.type;
 });
-
-// Watch for bridge availability
-watch(
-  () => window.bridge,
-  () => {
-    // Computed properties will automatically update
-  },
-  { immediate: true }
-);
 </script>
