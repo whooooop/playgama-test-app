@@ -1,7 +1,14 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 const LAST_VISITED_KEY = 'lastVisitedPage';
-const validPaths = ['/platform', '/game', '/device', '/player', '/storage'];
+const validPaths = [
+  '/platform',
+  '/game',
+  '/device',
+  '/player',
+  '/storage',
+  '/advertisement',
+];
 
 // Get last visited page or default to platform
 function getLastVisitedPage(): string {
@@ -43,6 +50,11 @@ const router = createRouter({
       path: '/storage',
       name: 'Storage',
       component: () => import('../views/StorageView.vue'),
+    },
+    {
+      path: '/advertisement',
+      name: 'Advertisement',
+      component: () => import('../views/AdvertisementView.vue'),
     },
   ],
 });

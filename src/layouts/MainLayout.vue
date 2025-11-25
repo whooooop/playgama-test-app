@@ -26,7 +26,8 @@ const { isInitialized } = useSDK();
 .main-layout {
   display: flex;
   min-height: 100vh;
-  background: #f8f9fa;
+  background: var(--bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 .main-content {

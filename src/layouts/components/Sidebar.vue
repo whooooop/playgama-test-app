@@ -47,6 +47,11 @@ const menuItems = [
     label: 'Storage',
     icon: 'mdi:database',
   },
+  {
+    path: '/advertisement',
+    label: 'Advertisement',
+    icon: 'mdi:bullhorn',
+  },
 ];
 
 const isActive = (path: string) => {
@@ -64,11 +69,14 @@ const isActive = (path: string) => {
   left: 0;
   top: 0;
   bottom: 0;
-  background: white;
-  border-right: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
   padding: 24px 16px;
   overflow-y: auto;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 2px 0 8px var(--shadow-sm);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .sidebar-nav {
@@ -83,7 +91,7 @@ const isActive = (path: string) => {
   gap: 12px;
   padding: 12px 16px;
   border-radius: 12px;
-  color: #495057;
+  color: var(--text-secondary);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -92,8 +100,8 @@ const isActive = (path: string) => {
 }
 
 .nav-item:hover {
-  background: #f8f9fa;
-  color: #1a1a1a;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .nav-item.active {
@@ -122,11 +130,11 @@ const isActive = (path: string) => {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--border-color);
   border-radius: 3px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--text-secondary);
 }
 </style>

@@ -82,11 +82,14 @@ const onCustomUrlChange = () => {
 
 <style scoped>
 .sdk-selector {
-  background: #f8f9fa;
+  background: var(--bg-primary);
   border-radius: 10px;
   padding: 15px;
   margin-bottom: 20px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .selector-row {
@@ -99,11 +102,15 @@ const onCustomUrlChange = () => {
 .version-selector select,
 .custom-url input {
   padding: 8px 12px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 0.9em;
-  transition: border-color 0.3s ease;
-  background: white;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .version-selector select {
@@ -120,6 +127,12 @@ const onCustomUrlChange = () => {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.version-selector select::placeholder,
+.custom-url input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.8;
 }
 
 .load-btn {
@@ -140,10 +153,11 @@ const onCustomUrlChange = () => {
 }
 
 .load-btn:disabled {
-  background: #6c757d;
+  background: var(--text-secondary);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
+  opacity: 0.6;
 }
 
 .status-info {
@@ -158,6 +172,11 @@ const onCustomUrlChange = () => {
   display: inline-block;
 }
 
+.dark .loading {
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.2);
+}
+
 .current-sdk {
   color: #155724;
   background: #d4edda;
@@ -166,12 +185,22 @@ const onCustomUrlChange = () => {
   display: inline-block;
 }
 
+.dark .current-sdk {
+  color: #4caf50;
+  background: rgba(76, 175, 80, 0.2);
+}
+
 .error {
   color: #721c24;
   background: #f8d7da;
   padding: 5px 10px;
   border-radius: 4px;
   display: inline-block;
+}
+
+.dark .error {
+  color: #f44336;
+  background: rgba(244, 67, 54, 0.2);
 }
 
 @media (max-width: 768px) {
