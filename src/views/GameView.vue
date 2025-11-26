@@ -7,21 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
 import InfoGrid from '../components/InfoGrid.vue';
 
-// Extend Window interface for bridge
-declare global {
-  interface Window {
-    bridge?: any;
-  }
-}
-
-// Computed bridge
 const bridge = computed(() => window.bridge);
-
 const visibilityStates = ref('');
 
 const initializeGame = () => {
@@ -53,4 +44,8 @@ const initializeGame = () => {
     visibilityStates.value = 'Error: ' + error.message;
   }
 };
+
+onMounted(() => {
+  initializeGame();
+});
 </script>

@@ -15,14 +15,13 @@
       title="Minimum Delay Between Interstitial"
       description="Sets the minimum time delay (in milliseconds) between showing interstitial ads. This prevents showing ads too frequently and improves user experience."
     >
-      <div class="input-group">
-        <input
+      <InputGroup>
+        <Input
           v-model="minimumDelayInput"
-          type="text"
           placeholder="Minimum Delay Between Interstitial (ms)"
         />
         <Button @click="setMinimumDelay">Set Minimum Delay</Button>
-      </div>
+      </InputGroup>
     </SubSection>
 
     <!-- Banner Section -->
@@ -30,14 +29,14 @@
       <InfoGrid>
         <InfoItem label="Last Banner States:" :value="bannerStates" />
       </InfoGrid>
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="showBanner" :disabled="!isBannerSupported">
           Show Banner
         </Button>
         <Button @click="hideBanner" :disabled="!isBannerSupported">
           Hide Banner
         </Button>
-      </div>
+      </ButtonGroup>
     </SubSection>
 
     <!-- Interstitial Section -->
@@ -48,11 +47,11 @@
           :value="interstitialStates"
         />
       </InfoGrid>
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="showInterstitial" :disabled="!isInterstitialSupported">
           Show Interstitial
         </Button>
-      </div>
+      </ButtonGroup>
     </SubSection>
 
     <!-- Rewarded Section -->
@@ -61,18 +60,18 @@
         <InfoItem label="Last Rewarded States:" :value="rewardedStates" />
         <InfoItem label="Rewarded Placement:" :value="rewardedPlacement" />
       </InfoGrid>
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="showRewarded" :disabled="!isRewardedSupported">
           Show Rewarded
         </Button>
-      </div>
+      </ButtonGroup>
     </SubSection>
 
     <!-- AdBlock Detection -->
     <SubSection title="AdBlock Detection">
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="checkAdBlock">Is AdBlock Detected</Button>
-      </div>
+      </ButtonGroup>
     </SubSection>
   </Section>
 </template>
@@ -84,12 +83,9 @@ import Section from '../components/Section.vue';
 import SubSection from '../components/SubSection.vue';
 import Button from '../components/Button.vue';
 import InfoGrid from '../components/InfoGrid.vue';
-
-declare global {
-  interface Window {
-    bridge?: any;
-  }
-}
+import Input from '../components/Input.vue';
+import InputGroup from '../components/InputGroup.vue';
+import ButtonGroup from '../components/ButtonGroup.vue';
 
 const bridge = computed(() => window.bridge);
 
@@ -276,13 +272,11 @@ const cleanup = () => {
 };
 
 onMounted(() => {
-  // Check if bridge is already available
   if (bridge.value?.advertisement) {
     initialize();
     return;
   }
 
-  // Watch for bridge availability
   const stopWatcher = watch(
     () => bridge.value,
     newBridge => {
@@ -299,55 +293,3 @@ onUnmounted(() => {
   cleanup();
 });
 </script>
-
-<style scoped>
-.input-group {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  align-items: stretch;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 14px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.input-group input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.input-group input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.8;
-}
-
-.button-group {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-
-@media (max-width: 768px) {
-  .input-group {
-    flex-direction: column;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group button {
-    width: 100%;
-  }
-}
-</style>

@@ -20,37 +20,32 @@
     </InfoGrid>
 
     <SubSection title="Storage Actions">
-      <div class="input-group">
-        <input v-model="coinsValue" type="text" placeholder="Coins" />
-        <input v-model="levelValue" type="text" placeholder="Level" />
-      </div>
+      <InputGroup>
+        <Input v-model="coinsValue" placeholder="Coins" />
+        <Input v-model="levelValue" placeholder="Level" />
+      </InputGroup>
 
-      <div class="select-group">
-        <select v-model="storageType">
-          <option value="local_storage">LocalStorage</option>
-          <option value="platform_internal">PlatformInternal</option>
-        </select>
-      </div>
+      <Select v-model="storageType">
+        <option value="local_storage">LocalStorage</option>
+        <option value="platform_internal">PlatformInternal</option>
+      </Select>
 
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="getStorageData">Get Data</Button>
         <Button @click="setStorageData">Set Data</Button>
         <Button @click="deleteStorageData">Delete Data</Button>
-      </div>
+      </ButtonGroup>
 
-      <div v-if="storageStatus" class="status-message">
-        <strong>Status:</strong> {{ storageStatus }}
-      </div>
+      <InfoItem v-if="storageStatus" label="Status:" :value="storageStatus" />
     </SubSection>
 
-    <!-- Single Key Operations -->
     <SubSection title="Single Key Operations">
-      <div class="input-group">
-        <input v-model="singleKey" type="text" placeholder="Key" />
-        <input v-model="singleValue" type="text" placeholder="Value" />
-      </div>
+      <InputGroup>
+        <Input v-model="singleKey" placeholder="Key" />
+        <Input v-model="singleValue" placeholder="Value" />
+      </InputGroup>
 
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="getSingleKey" :disabled="!singleKey">
           Get Single Key
         </Button>
@@ -60,33 +55,27 @@
         <Button @click="deleteSingleKey" :disabled="!singleKey">
           Delete Single Key
         </Button>
-      </div>
+      </ButtonGroup>
 
-      <div v-if="singleKeyResult" class="result-display">
-        <strong>Single Key Result:</strong>
+      <div v-if="singleKeyResult">
+        <InfoItem label="Single Key Result:" :value="''" />
         <CodeBlock>{{ singleKeyResult }}</CodeBlock>
       </div>
     </SubSection>
 
-    <!-- Multiple Keys Operations -->
     <SubSection title="Multiple Keys Operations">
-      <div class="input-group">
-        <input
-          v-model="multipleKeys"
-          type="text"
-          placeholder="Keys (comma separated)"
-        />
-      </div>
+      <InputGroup>
+        <Input v-model="multipleKeys" placeholder="Keys (comma separated)" />
+      </InputGroup>
 
-      <div class="input-group">
-        <input
+      <InputGroup>
+        <Input
           v-model="multipleValues"
-          type="text"
           placeholder="Values (comma separated)"
         />
-      </div>
+      </InputGroup>
 
-      <div class="button-group">
+      <ButtonGroup>
         <Button @click="getMultipleKeys" :disabled="!multipleKeys">
           Get Multiple Keys
         </Button>
@@ -96,10 +85,10 @@
         <Button @click="deleteMultipleKeys" :disabled="!multipleKeys">
           Delete Multiple Keys
         </Button>
-      </div>
+      </ButtonGroup>
 
-      <div v-if="multipleKeysResult" class="result-display">
-        <strong>Multiple Keys Result:</strong>
+      <div v-if="multipleKeysResult">
+        <InfoItem label="Multiple Keys Result:" :value="''" />
         <CodeBlock>{{ multipleKeysResult }}</CodeBlock>
       </div>
     </SubSection>
@@ -107,25 +96,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
 import SubSection from '../components/SubSection.vue';
 import Button from '../components/Button.vue';
 import CodeBlock from '../components/CodeBlock.vue';
 import InfoGrid from '../components/InfoGrid.vue';
+import Input from '../components/Input.vue';
+import InputGroup from '../components/InputGroup.vue';
+import ButtonGroup from '../components/ButtonGroup.vue';
+import Select from '../components/Select.vue';
 
-// Extend Window interface for bridge
 declare global {
   interface Window {
     bridge?: any;
   }
 }
 
-// Computed bridge
 const bridge = computed(() => window.bridge);
 
-// Computed storage data
 const isLocalStorageSupported = computed(() => {
   if (!bridge.value) return null;
   return bridge.value.storage.isSupported(
@@ -159,17 +149,14 @@ const levelValue = ref('');
 const storageType = ref('local_storage');
 const storageStatus = ref('');
 
-// Single key operations
 const singleKey = ref('');
 const singleValue = ref('');
 const singleKeyResult = ref('');
 
-// Multiple keys operations
 const multipleKeys = ref('');
 const multipleValues = ref('');
 const multipleKeysResult = ref('');
 
-// Methods
 const getStorageData = async () => {
   if (!bridge.value) return;
 
@@ -250,7 +237,6 @@ const deleteStorageData = async () => {
   }
 };
 
-// Single key operations
 const getSingleKey = async () => {
   if (!bridge.value || !singleKey.value) return;
 
@@ -312,7 +298,6 @@ const deleteSingleKey = async () => {
   }
 };
 
-// Multiple keys operations
 const getMultipleKeys = async () => {
   if (!bridge.value || !multipleKeys.value) return;
 
@@ -367,127 +352,3 @@ const deleteMultipleKeys = async () => {
   }
 };
 </script>
-
-<style scoped>
-.input-group {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  align-items: stretch;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 14px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.input-group input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.input-group input:disabled {
-  background: var(--bg-primary);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.input-group input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.8;
-}
-
-.select-group {
-  margin-bottom: 16px;
-}
-
-.select-group select {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  min-width: 200px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.select-group select:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.select-group select:disabled {
-  background: var(--bg-primary);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.button-group {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.status-message {
-  padding: 12px 16px;
-  background: var(--bg-primary);
-  border-radius: 12px;
-  font-size: 14px;
-  margin-top: 16px;
-  color: var(--text-primary);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.status-message strong {
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.result-display {
-  margin-top: 16px;
-  padding: 16px;
-  background: var(--bg-primary);
-  border-radius: 12px;
-  transition: background-color 0.3s ease;
-}
-
-.result-display strong {
-  display: block;
-  margin-bottom: 8px;
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 14px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .input-group {
-    flex-direction: column;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group button {
-    width: 100%;
-  }
-
-  .select-group select {
-    width: 100%;
-  }
-}
-</style>

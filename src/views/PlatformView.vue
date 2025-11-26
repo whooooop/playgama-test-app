@@ -17,48 +17,52 @@
       />
     </InfoGrid>
 
-    <div class="actions">
+    <ButtonGroup>
       <Button @click="getServerTime">Get Server Time</Button>
-    </div>
+    </ButtonGroup>
 
-    <div class="message-section">
-      <InfoItem label="Send Message Status:" :value="messageStatus" />
-      <div class="input-group">
-        <input v-model="messageText" type="text" placeholder="Message" />
+    <SubSection title="Send Message">
+      <InfoItem label="Status:" :value="messageStatus" />
+      <InputGroup>
+        <Input v-model="messageText" placeholder="Message" />
         <Button @click="sendMessage" :disabled="!messageText">
           Send Message
         </Button>
-      </div>
-    </div>
+      </InputGroup>
+    </SubSection>
 
-    <div class="games-section" v-if="isGetAllGamesSupported">
-      <div class="games-container">
-        <p><strong>All Games:</strong></p>
-        <CodeBlock>{{ allGames }}</CodeBlock>
+    <SubSection v-if="isGetAllGamesSupported" title="All Games">
+      <p><strong>All Games:</strong></p>
+      <CodeBlock>{{ allGames }}</CodeBlock>
+      <ButtonGroup>
         <Button @click="getAllGames">Get All Games</Button>
-      </div>
-    </div>
+      </ButtonGroup>
+    </SubSection>
 
-    <div class="game-by-id-section" v-if="isGetGameByIdSupported">
-      <div class="input-group">
-        <input v-model="gameId" type="text" placeholder="Game ID" />
+    <SubSection v-if="isGetGameByIdSupported" title="Get Game By ID">
+      <InputGroup>
+        <Input v-model="gameId" placeholder="Game ID" />
         <Button @click="getGameById" :disabled="!gameId">Get Game By ID</Button>
-      </div>
-      <div class="game-container">
+      </InputGroup>
+      <div v-if="gameData">
         <p><strong>Game Data:</strong></p>
         <CodeBlock>{{ gameData }}</CodeBlock>
       </div>
-    </div>
+    </SubSection>
   </Section>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue';
+import { ref, computed } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
+import SubSection from '../components/SubSection.vue';
 import Button from '../components/Button.vue';
+import ButtonGroup from '../components/ButtonGroup.vue';
 import CodeBlock from '../components/CodeBlock.vue';
 import InfoGrid from '../components/InfoGrid.vue';
+import Input from '../components/Input.vue';
+import InputGroup from '../components/InputGroup.vue';
 
 declare global {
   interface Window {
@@ -132,104 +136,3 @@ const getGameById = async () => {
   }
 };
 </script>
-
-<style scoped>
-.actions {
-  margin: 24px 0;
-}
-
-.input-group {
-  display: flex;
-  gap: 12px;
-  margin: 16px 0;
-  align-items: stretch;
-}
-
-.input-group input {
-  flex: 1;
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 14px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  transition: all 0.2s ease;
-  outline: none;
-}
-
-.input-group input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.input-group input:disabled {
-  background: var(--bg-primary);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.input-group input::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.8;
-}
-
-.message-section,
-.games-section,
-.game-by-id-section {
-  margin: 24px 0;
-  padding: 20px;
-  background: var(--bg-primary);
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.games-container,
-.game-container {
-  margin-top: 16px;
-}
-
-.games-container p,
-.game-container p {
-  margin: 0 0 12px 0;
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 16px;
-}
-
-.games-container button,
-.game-container button {
-  margin-top: 12px;
-}
-
-/* Status indicators */
-.message-section :deep(.info-item) {
-  background: transparent;
-  border: none;
-  padding: 8px 0;
-}
-
-.message-section :deep(.value) {
-  font-weight: 500;
-  color: #28a745;
-}
-
-.dark .message-section :deep(.value) {
-  color: #4caf50;
-}
-
-@media (max-width: 768px) {
-  /* InfoGrid responsive styles moved to InfoGrid component */
-
-  .input-group {
-    flex-direction: column;
-  }
-
-  .input-group button {
-    width: 100%;
-  }
-}
-</style>
