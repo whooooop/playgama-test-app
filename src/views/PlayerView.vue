@@ -14,9 +14,7 @@
         <InfoItem label="Photos:" :value="player.photosString" />
       </InfoGrid>
 
-      <InfoGrid>
-        <InfoItem label="Extra:" :value="player.extra" />
-      </InfoGrid>
+      <CodeBlock>{{ player.extra }}</CodeBlock>
 
       <PhotosGrid :photos="player.photos" />
 
@@ -45,6 +43,7 @@ import InfoGrid from '../components/InfoGrid.vue';
 import Checkbox from '../components/Checkbox.vue';
 import CheckboxGroup from '../components/CheckboxGroup.vue';
 import PhotosGrid from '../components/PhotosGrid.vue';
+import CodeBlock from '../components/CodeBlock.vue';
 
 const bridge = computed(() => window.bridge);
 const player = ref<any>({
@@ -79,7 +78,7 @@ const updatePlayerData = async () => {
     : null;
   player.value.isAuthorized = bridge.value.player.isAuthorized ?? false;
   player.value.extra = bridge.value.player.extra
-    ? JSON.stringify(bridge.value.player.extra)
+    ? JSON.stringify(bridge.value.player.extra, undefined, 2)
     : null;
 };
 
