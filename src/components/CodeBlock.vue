@@ -1,7 +1,7 @@
 <template>
-  <pre class="code-block">
-    <slot>{{ content }}</slot>
-  </pre>
+  <div class="code-block-container">
+    <pre class="code-block"><slot>{{ content }}</slot></pre>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -11,17 +11,28 @@ defineProps<{
 </script>
 
 <style scoped>
+.code-block-container {
+  min-width: 0;
+  overflow: hidden;
+}
+
 .code-block {
+  display: flex;
   background: var(--code-bg);
   color: var(--code-text);
   padding: 16px;
   border-radius: 12px;
   overflow-x: auto;
+  overflow-y: auto;
+  min-width: 0;
+  max-height: 500px;
   font-size: 13px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
-  max-height: 300px;
-  overflow-y: auto;
   line-height: 1.6;
+  white-space: pre;
+  word-wrap: normal;
+  word-break: normal;
+  box-sizing: border-box;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--code-border);
   transition:

@@ -64,12 +64,6 @@ import InfoGrid from '../components/InfoGrid.vue';
 import Input from '../components/Input.vue';
 import InputGroup from '../components/InputGroup.vue';
 
-declare global {
-  interface Window {
-    bridge?: any;
-  }
-}
-
 const serverTime = ref('N/A');
 const messageStatus = ref('Ready');
 const messageText = ref('');

@@ -52,6 +52,36 @@ const menuItems = [
     label: 'Advertisement',
     icon: 'mdi:bullhorn',
   },
+  {
+    path: '/remote-config',
+    label: 'Remote Config',
+    icon: 'mdi:cog',
+  },
+  {
+    path: '/clipboard',
+    label: 'Clipboard',
+    icon: 'mdi:clipboard-text',
+  },
+  {
+    path: '/achievements',
+    label: 'Achievements',
+    icon: 'mdi:trophy',
+  },
+  {
+    path: '/social',
+    label: 'Social',
+    icon: 'mdi:share-variant',
+  },
+  {
+    path: '/leaderboards',
+    label: 'Leaderboards',
+    icon: 'mdi:format-list-numbered',
+  },
+  {
+    path: '/payments',
+    label: 'Payments',
+    icon: 'mdi:credit-card',
+  },
 ];
 
 const isActive = (path: string) => {

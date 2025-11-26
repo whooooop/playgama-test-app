@@ -1,12 +1,5 @@
 import { ref, computed, watch } from 'vue';
 
-// Extend Window interface for bridge
-declare global {
-  interface Window {
-    bridge?: any;
-  }
-}
-
 const STORAGE_VERSION_KEY = 'sdk-version';
 const STORAGE_CUSTOM_URL_KEY = 'sdk-custom-url';
 

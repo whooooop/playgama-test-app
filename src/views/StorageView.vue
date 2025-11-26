@@ -108,12 +108,6 @@ import InputGroup from '../components/InputGroup.vue';
 import ButtonGroup from '../components/ButtonGroup.vue';
 import Select from '../components/Select.vue';
 
-declare global {
-  interface Window {
-    bridge?: any;
-  }
-}
-
 const bridge = computed(() => window.bridge);
 
 const isLocalStorageSupported = computed(() => {

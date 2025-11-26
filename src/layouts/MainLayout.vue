@@ -35,6 +35,7 @@ const { isInitialized } = useSDK();
   margin-left: 240px;
   padding: 24px 32px;
   min-height: 100vh;
+  min-width: 0;
 }
 
 .content-wrapper {
