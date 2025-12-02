@@ -56,6 +56,10 @@ defineEmits<{
   flex-shrink: 0;
 }
 
+.dark .checkbox {
+  accent-color: var(--accent-purple, #8a2be2);
+}
+
 .checkbox:disabled {
   cursor: not-allowed;
 }

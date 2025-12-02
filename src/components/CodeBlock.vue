@@ -40,6 +40,15 @@ defineProps<{
     color 0.3s ease,
     border-color 0.3s ease;
   margin: 0;
+  position: relative;
+}
+
+.dark .code-block {
+  box-shadow: 
+    inset 0 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(138, 43, 226, 0.1),
+    inset 0 0 30px rgba(0, 191, 255, 0.05);
+  border: 1px solid var(--code-border);
 }
 
 /* Smooth scrolling */
@@ -58,7 +67,16 @@ defineProps<{
   border-radius: 4px;
 }
 
+.dark .code-block::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-purple, #8a2be2) 0%, var(--accent-blue, #00bfff) 100%);
+}
+
 .code-block::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+.dark .code-block::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-pink, #ff1493) 0%, var(--accent-cyan, #00ffff) 100%);
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
 }
 </style>

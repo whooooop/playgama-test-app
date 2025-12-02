@@ -96,17 +96,30 @@ const isActive = (path: string) => {
 .sidebar {
   width: 240px;
   position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 25px;
+  top: 25px;
   background: var(--bg-secondary);
-  border-right: 1px solid var(--border-color);
+  border-right: 2px solid var(--border-color);
   padding: 24px 16px;
+  border-radius: 16px;
   overflow-y: auto;
-  box-shadow: 2px 0 8px var(--shadow-sm);
+  box-shadow:
+    2px 0 16px rgba(138, 43, 226, 0.3),
+    inset -2px 0 20px rgba(0, 191, 255, 0.1);
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
+  background-image:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(138, 43, 226, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(0, 191, 255, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .sidebar-nav {
@@ -130,14 +143,26 @@ const isActive = (path: string) => {
 }
 
 .nav-item:hover {
-  background: var(--bg-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(138, 43, 226, 0.2) 0%,
+    rgba(0, 191, 255, 0.2) 100%
+  );
   color: var(--text-primary);
+  border-left: 3px solid var(--accent-purple, #8a2be2);
+  transform: translateX(4px);
 }
 
 .nav-item.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(
+    --gradient-primary,
+    linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+  );
   color: white;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  box-shadow:
+    0 4px 12px rgba(138, 43, 226, 0.5),
+    0 0 20px rgba(0, 191, 255, 0.3);
+  border-left: 3px solid var(--accent-cyan, #00ffff);
 }
 
 .nav-icon {
@@ -160,11 +185,20 @@ const isActive = (path: string) => {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: linear-gradient(
+    180deg,
+    var(--accent-purple, #8a2be2) 0%,
+    var(--accent-blue, #00bfff) 100%
+  );
   border-radius: 3px;
 }
 
 .sidebar::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: linear-gradient(
+    180deg,
+    var(--accent-pink, #ff1493) 0%,
+    var(--accent-cyan, #00ffff) 100%
+  );
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
 }
 </style>

@@ -45,6 +45,11 @@ defineEmits<{
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.dark .select:focus {
+  border-color: var(--accent-purple, #8a2be2);
+  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3), 0 0 20px rgba(0, 191, 255, 0.2);
+}
+
 .select:disabled {
   background: var(--bg-primary);
   cursor: not-allowed;

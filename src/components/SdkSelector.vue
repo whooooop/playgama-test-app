@@ -129,6 +129,12 @@ const onCustomUrlChange = () => {
   box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
 }
 
+.dark .version-selector select:focus,
+.dark .custom-url input:focus {
+  border-color: var(--accent-purple, #8a2be2);
+  box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3), 0 0 15px rgba(0, 191, 255, 0.2);
+}
+
 .version-selector select::placeholder,
 .custom-url input::placeholder {
   color: var(--text-secondary);
@@ -147,9 +153,19 @@ const onCustomUrlChange = () => {
   min-width: 40px;
 }
 
+.dark .load-btn {
+  background: var(--gradient-primary, linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%));
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4), 0 0 15px rgba(0, 191, 255, 0.2);
+}
+
 .load-btn:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+}
+
+.dark .load-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.6), 0 0 25px rgba(0, 191, 255, 0.4);
+  filter: brightness(1.1);
 }
 
 .load-btn:disabled {
@@ -173,8 +189,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .loading {
-  color: #ffc107;
-  background: rgba(255, 193, 7, 0.2);
+  color: var(--accent-yellow, #ffd700);
+  background: rgba(255, 215, 0, 0.2);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
 .current-sdk {
@@ -186,8 +204,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .current-sdk {
-  color: #4caf50;
-  background: rgba(76, 175, 80, 0.2);
+  color: var(--accent-green, #00ff88);
+  background: rgba(0, 255, 136, 0.2);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
 .error {
@@ -199,8 +219,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .error {
-  color: #f44336;
-  background: rgba(244, 67, 54, 0.2);
+  color: var(--accent-pink, #ff1493);
+  background: rgba(255, 20, 147, 0.2);
+  border: 1px solid rgba(255, 20, 147, 0.4);
+  box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
 }
 
 @media (max-width: 768px) {

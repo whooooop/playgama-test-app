@@ -28,12 +28,32 @@ const { isInitialized } = useSDK();
   min-height: 100vh;
   background: var(--bg-primary);
   transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.dark .main-layout {
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(138, 43, 226, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(0, 191, 255, 0.15) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 20, 147, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 .main-content {
   flex: 1;
   margin-left: 240px;
-  padding: 24px 32px;
+  padding: 25px 50px;
   min-height: 100vh;
   min-width: 0;
 }
@@ -57,6 +77,17 @@ const { isInitialized } = useSDK();
   padding: 16px 24px;
   border-radius: 8px;
   display: inline-block;
+}
+
+.dark .loading-message {
+  color: var(--accent-cyan, #00ffff);
+  background: linear-gradient(
+    135deg,
+    rgba(138, 43, 226, 0.2) 0%,
+    rgba(0, 191, 255, 0.2) 100%
+  );
+  border: 1px solid var(--accent-purple, #8a2be2);
+  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
 }
 
 @media (max-width: 1024px) {

@@ -34,18 +34,32 @@ initTheme();
 }
 
 .dark {
-  /* Dark theme colors */
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --text-primary: #e9ecef;
-  --text-secondary: #adb5bd;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 32px 56px -12px rgba(0, 0, 0, 0.4);
-  --code-bg: #0a0a0a;
+  /* Vibrant dark gaming theme colors */
+  --bg-primary: #0a0a12;
+  --bg-secondary: #151520;
+  --text-primary: #f0f0ff;
+  --text-secondary: #a0a0c0;
+  --border-color: rgba(138, 43, 226, 0.3);
+  --shadow-sm: 0 2px 8px rgba(138, 43, 226, 0.2);
+  --shadow-md: 0 4px 16px rgba(138, 43, 226, 0.3);
+  --shadow-lg: 0 32px 56px -12px rgba(138, 43, 226, 0.4);
+  --code-bg: #0d0d18;
   --code-text: #e9ecef;
-  --code-border: rgba(255, 255, 255, 0.1);
+  --code-border: rgba(138, 43, 226, 0.4);
+  
+  /* Vibrant accent colors */
+  --accent-purple: #8a2be2;
+  --accent-blue: #00bfff;
+  --accent-pink: #ff1493;
+  --accent-cyan: #00ffff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00ff88;
+  --accent-yellow: #ffd700;
+  
+  /* Gradient colors */
+  --gradient-primary: linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%);
+  --gradient-secondary: linear-gradient(135deg, #00bfff 0%, #00ffff 100%);
+  --gradient-accent: linear-gradient(135deg, #ff1493 0%, #ff6b35 100%);
 }
 
 body {
@@ -60,6 +74,12 @@ body {
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+.dark body {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
 }
 
 #app {
