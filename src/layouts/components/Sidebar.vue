@@ -1,19 +1,21 @@
 <template>
-  <aside class="sidebar">
-    <div class="sidebar-indicator"></div>
-    <nav class="sidebar-nav">
-      <router-link
-        v-for="item in menuItems"
-        :key="item.path"
-        :to="item.path"
-        class="nav-item"
-        :class="{ active: isActive(item.path) }"
-      >
-        <Icon :icon="item.icon" class="nav-icon" />
-        <span class="nav-text">{{ item.label }}</span>
-      </router-link>
-    </nav>
-  </aside>
+  <div class="sidebar-wrapper">
+    <div class="sidebar-hover-area"></div>
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <router-link
+          v-for="item in menuItems"
+          :key="item.path"
+          :to="item.path"
+          class="nav-item"
+          :class="{ active: isActive(item.path) }"
+        >
+          <Icon :icon="item.icon" class="nav-icon" />
+          <span class="nav-text">{{ item.label }}</span>
+        </router-link>
+      </nav>
+    </aside>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -94,12 +96,51 @@ const isActive = (path: string) => {
 </script>
 
 <style scoped>
-.sidebar {
-  width: 240px;
+.sidebar-wrapper {
   position: fixed;
   left: 0;
   top: 25px;
   height: calc(100vh - 50px);
+  z-index: 1000;
+}
+
+.sidebar-hover-area {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 100%;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+.sidebar-hover-area::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 200px;
+  background: linear-gradient(
+    180deg,
+    var(--accent-purple, #8a2be2) 0%,
+    var(--accent-blue, #00bfff) 100%
+  );
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-wrapper:hover .sidebar-hover-area::before {
+  opacity: 0;
+}
+
+.sidebar {
+  width: 240px;
+  position: absolute;
+  left: 0;
+  top: 50%;
   background: var(--bg-secondary);
   border-right: 2px solid var(--border-color);
   padding: 24px 16px;
@@ -111,9 +152,9 @@ const isActive = (path: string) => {
     inset -2px 0 20px rgba(0, 191, 255, 0.1);
   transform-style: preserve-3d;
   transform-origin: left center;
-  transform: translateX(-190px) perspective(1200px) rotateY(-40deg);
+  transform: translateX(-150px) translateY(-50%) perspective(1200px)
+    rotateY(-100deg);
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-  z-index: 1000;
   backface-visibility: hidden;
   background-image:
     radial-gradient(
@@ -128,31 +169,8 @@ const isActive = (path: string) => {
     );
 }
 
-.sidebar:hover {
-  transform: translateX(0) perspective(1200px) rotateY(0deg);
-}
-
-.sidebar-indicator {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 60px;
-  background: linear-gradient(
-    180deg,
-    var(--accent-purple, #8a2be2) 0%,
-    var(--accent-blue, #00bfff) 100%
-  );
-  border-radius: 2px 0 0 2px;
-  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
-  z-index: 1001;
-  pointer-events: none;
-}
-
-.sidebar:hover .sidebar-indicator {
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.sidebar-wrapper:hover .sidebar {
+  transform: translateX(0) translateY(-50%) perspective(1200px) rotateY(0deg);
 }
 
 .sidebar-nav {

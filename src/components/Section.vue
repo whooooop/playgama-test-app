@@ -1,6 +1,9 @@
 <template>
   <div class="section">
-    <h2 v-if="title">{{ title }}</h2>
+    <div class="section-header">
+      <h2 v-if="title">{{ title }}</h2>
+      <slot name="header" />
+    </div>
     <slot />
   </div>
 </template>
@@ -30,6 +33,12 @@ defineProps<{
   overflow: hidden;
 }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
 .section::before {
   content: '';
   position: absolute;
@@ -37,7 +46,10 @@ defineProps<{
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--gradient-primary, linear-gradient(90deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%));
+  background: var(
+    --gradient-primary,
+    linear-gradient(90deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+  );
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -47,9 +59,17 @@ defineProps<{
     0 32px 56px -12px rgba(138, 43, 226, 0.2),
     0 6px 12px -3px rgba(0, 191, 255, 0.15),
     0 0 0 1px var(--border-color);
-  background-image: 
-    radial-gradient(circle at top right, rgba(138, 43, 226, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at bottom left, rgba(0, 191, 255, 0.05) 0%, transparent 50%);
+  background-image:
+    radial-gradient(
+      circle at top right,
+      rgba(138, 43, 226, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(0, 191, 255, 0.05) 0%,
+      transparent 50%
+    );
 }
 
 .dark .section::before {
@@ -77,8 +97,8 @@ defineProps<{
   font-size: 24px;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 24px 0;
   letter-spacing: -0.01em;
+  margin: 0;
 }
 
 /* Responsive adjustments */

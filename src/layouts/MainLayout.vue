@@ -2,8 +2,8 @@
   <div class="main-layout">
     <Sidebar />
     <div class="main-content">
-      <Header />
       <div class="content-wrapper">
+        <Header />
         <router-view v-if="isInitialized" />
         <div v-else class="loading-container">
           <div class="loading-message">⏳ Загрузка SDK...</div>

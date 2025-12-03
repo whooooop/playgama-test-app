@@ -1,5 +1,14 @@
 <template>
-  <div class="sdk-selector">
+  <Section title="SDK Selector">
+    <template #header v-if="currentSdkVersion || error || loading">
+      <div class="status-info">
+        <div v-if="loading" class="loading">⏳ Загрузка SDK...</div>
+        <div v-if="currentSdkVersion" class="current-sdk">
+          ✅ {{ currentSdkVersion }}
+        </div>
+        <div v-if="error" class="error">❌ {{ error }}</div>
+      </div>
+    </template>
     <div class="selector-row">
       <div class="version-selector">
         <select v-model="selectedVersion" @change="onVersionChange">
@@ -32,22 +41,14 @@
         {{ loading ? '⏳' : '🚀' }}
       </button>
     </div>
-
-    <div v-if="currentSdkVersion || error || loading" class="status-info">
-      <div v-if="loading" class="loading">⏳ Загрузка SDK...</div>
-      <div v-if="currentSdkVersion" class="current-sdk">
-        ✅ {{ currentSdkVersion }}
-      </div>
-      <div v-if="error" class="error">❌ {{ error }}</div>
-    </div>
-  </div>
+  </Section>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useSDK, availableVersions } from '../composables/useSDK';
+import Section from './Section.vue';
 
-// Use bridge composable
 const {
   selectedVersion,
   customUrl,
@@ -81,17 +82,6 @@ const onCustomUrlChange = () => {
 </script>
 
 <style scoped>
-.sdk-selector {
-  background: var(--bg-primary);
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
 .selector-row {
   display: flex;
   gap: 10px;
@@ -132,7 +122,9 @@ const onCustomUrlChange = () => {
 .dark .version-selector select:focus,
 .dark .custom-url input:focus {
   border-color: var(--accent-purple, #8a2be2);
-  box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.3), 0 0 15px rgba(0, 191, 255, 0.2);
+  box-shadow:
+    0 0 0 2px rgba(138, 43, 226, 0.3),
+    0 0 15px rgba(0, 191, 255, 0.2);
 }
 
 .version-selector select::placeholder,
@@ -154,8 +146,13 @@ const onCustomUrlChange = () => {
 }
 
 .dark .load-btn {
-  background: var(--gradient-primary, linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%));
-  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4), 0 0 15px rgba(0, 191, 255, 0.2);
+  background: var(
+    --gradient-primary,
+    linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+  );
+  box-shadow:
+    0 2px 8px rgba(138, 43, 226, 0.4),
+    0 0 15px rgba(0, 191, 255, 0.2);
 }
 
 .load-btn:hover:not(:disabled) {
@@ -164,7 +161,9 @@ const onCustomUrlChange = () => {
 }
 
 .dark .load-btn:hover:not(:disabled) {
-  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.6), 0 0 25px rgba(0, 191, 255, 0.4);
+  box-shadow:
+    0 4px 16px rgba(138, 43, 226, 0.6),
+    0 0 25px rgba(0, 191, 255, 0.4);
   filter: brightness(1.1);
 }
 
@@ -177,7 +176,9 @@ const onCustomUrlChange = () => {
 }
 
 .status-info {
+  display: inline-block;
   font-size: 0.9em;
+  margin-left: 10px;
 }
 
 .loading {
