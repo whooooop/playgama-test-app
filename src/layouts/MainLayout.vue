@@ -52,15 +52,18 @@ const { isInitialized } = useSDK();
 
 .main-content {
   flex: 1;
-  margin-left: 240px;
+  margin-left: 0;
   padding: 25px 50px;
+  padding-left: 60px;
   min-height: 100vh;
   min-width: 0;
+  width: 100%;
 }
 
 .content-wrapper {
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .loading-container {
@@ -92,15 +95,15 @@ const { isInitialized } = useSDK();
 
 @media (max-width: 1024px) {
   .main-content {
-    margin-left: 200px;
     padding: 20px 24px;
+    padding-left: 50px;
   }
 }
 
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0;
     padding: 16px;
+    padding-left: 40px;
   }
 }
 </style>

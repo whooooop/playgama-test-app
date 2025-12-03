@@ -1,5 +1,6 @@
 <template>
   <aside class="sidebar">
+    <div class="sidebar-indicator"></div>
     <nav class="sidebar-nav">
       <router-link
         v-for="item in menuItems"
@@ -96,19 +97,24 @@ const isActive = (path: string) => {
 .sidebar {
   width: 240px;
   position: fixed;
-  left: 25px;
+  left: 0;
   top: 25px;
+  height: calc(100vh - 50px);
   background: var(--bg-secondary);
   border-right: 2px solid var(--border-color);
   padding: 24px 16px;
-  border-radius: 16px;
+  border-radius: 0 16px 16px 0;
   overflow-y: auto;
+  overflow-x: hidden;
   box-shadow:
     2px 0 16px rgba(138, 43, 226, 0.3),
     inset -2px 0 20px rgba(0, 191, 255, 0.1);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transform: translateX(-190px) perspective(1200px) rotateY(-40deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1000;
+  backface-visibility: hidden;
   background-image:
     radial-gradient(
       circle at 20% 50%,
@@ -120,6 +126,33 @@ const isActive = (path: string) => {
       rgba(0, 191, 255, 0.1) 0%,
       transparent 50%
     );
+}
+
+.sidebar:hover {
+  transform: translateX(0) perspective(1200px) rotateY(0deg);
+}
+
+.sidebar-indicator {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    var(--accent-purple, #8a2be2) 0%,
+    var(--accent-blue, #00bfff) 100%
+  );
+  border-radius: 2px 0 0 2px;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.sidebar:hover .sidebar-indicator {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .sidebar-nav {
