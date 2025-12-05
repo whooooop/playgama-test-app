@@ -1,11 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
+const packageJson = require('../package.json');
 
 function createDistZip() {
   return new Promise((resolve, reject) => {
     const distPath = path.join(__dirname, '..', 'dist');
-    const zipPath = path.join(__dirname, '..', 'dist/build.zip');
+    const zipPath = path.join(
+      __dirname,
+      '..',
+      `dist/build-${packageJson.version}.zip`
+    );
 
     if (!fs.existsSync(distPath)) {
       reject(new Error('dist folder not found. Run npm run build first'));
