@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-section">
+  <div class="sub-section" :class="{ disabled }">
     <h3 v-if="title">{{ title }}</h3>
     <p v-if="description" class="description">{{ description }}</p>
     <slot />
@@ -10,6 +10,7 @@
 defineProps<{
   title?: string;
   description?: string;
+  disabled?: boolean;
 }>();
 </script>
 
@@ -24,6 +25,34 @@ defineProps<{
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
+}
+
+.sub-section.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  position: relative;
+  user-select: none;
+}
+
+.sub-section.disabled::before {
+  content: 'This feature is not available';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  background: var(--bg-primary);
+  border-radius: 16px;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+  z-index: 1;
+  color: var(--accent-orange);
 }
 
 .sub-section h3 {

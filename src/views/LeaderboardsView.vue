@@ -25,6 +25,18 @@
         <CodeBlock>{{ entries }}</CodeBlock>
       </div>
     </SubSection>
+
+    <SubSection title="Show native popup">
+      <InputGroup>
+        <Input v-model="showNativePopupId" placeholder="Leaderboard ID" />
+        <Button @click="showNativePopup" :disabled="!showNativePopupId">
+          Show native popup
+        </Button>
+      </InputGroup>
+      <div v-if="showNativePopupResult">
+        <CodeBlock>{{ showNativePopupResult }}</CodeBlock>
+      </div>
+    </SubSection>
   </Section>
 </template>
 
@@ -46,6 +58,8 @@ const leaderboardId = ref('');
 const score = ref('');
 const getEntriesId = ref('');
 const entries = ref('');
+const showNativePopupId = ref('');
+const showNativePopupResult = ref('');
 
 const setScore = async () => {
   if (!bridge.value?.leaderboards || !leaderboardId.value || !score.value)
@@ -82,6 +96,19 @@ const getEntries = async () => {
   } catch (error: any) {
     console.error('Error getting entries:', error);
     entries.value = 'Error: ' + error.message;
+  }
+};
+
+const showNativePopup = async () => {
+  if (!bridge.value?.leaderboards || !showNativePopupId.value) return;
+  try {
+    const result = await bridge.value.leaderboards.showNativePopup(
+      showNativePopupId.value
+    );
+    showNativePopupResult.value = JSON.stringify(result, undefined, 2);
+  } catch (error: any) {
+    console.error('Error showing native popup:', error);
+    showNativePopupResult.value = 'Error: ' + error.message;
   }
 };
 </script>
