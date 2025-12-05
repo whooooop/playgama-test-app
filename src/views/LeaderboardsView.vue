@@ -108,7 +108,7 @@ const showNativePopup = async () => {
     showNativePopupResult.value = JSON.stringify(result, undefined, 2);
   } catch (error: any) {
     console.error('Error showing native popup:', error);
-    showNativePopupResult.value = 'Error: ' + error.message;
+    showNativePopupResult.value = 'Error: ' + error?.message || 'Unknown error';
   }
 };
 </script>

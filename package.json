@@ -1,6 +1,6 @@
 {
   "name": "vue-game-test",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Простое Vue 3 приложение для тестирования игры",
   "main": "index.js",
   "scripts": {

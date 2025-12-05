@@ -9,6 +9,7 @@ export const availableVersions = [
   'v1.25.0',
   'v1.26.0',
   'v1.27.0',
+  'v1.27.1',
 ];
 
 // Singleton state for bridge
@@ -76,7 +77,7 @@ export function useSDK() {
       return customUrl.value;
     }
     if (selectedVersion.value && selectedVersion.value !== 'custom') {
-      return `./${selectedVersion.value}/playgama-bridge.js`;
+      return `./${selectedVersion.value}/playgama-bridge.js?v=${Date.now()}`;
     }
     return '';
   };
