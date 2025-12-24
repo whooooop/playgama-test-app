@@ -1,7 +1,7 @@
 {
-  "name": "vue-game-test",
-  "version": "2.0.1",
-  "description": "Простое Vue 3 приложение для тестирования игры",
+  "name": "playgama-bridge-test",
+  "version": "2.0.2",
+  "description": "Simple application for testing browser game SDK",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
