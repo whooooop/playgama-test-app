@@ -7,6 +7,7 @@
       <InfoItem label="TLD:" :value="tld" />
       <InfoItem label="Server Time:" :value="serverTime" />
       <InfoItem label="Audio Enabled:" :value="isAudioEnabled" />
+      <InfoItem label="Paused:" :value="isPaused" />
       <InfoItem
         label="Get All Games Supported:"
         :value="isGetAllGamesSupported"
@@ -53,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import InfoItem from '../components/InfoItem.vue';
 import Section from '../components/Section.vue';
 import SubSection from '../components/SubSection.vue';
@@ -76,7 +77,8 @@ const id = computed(() => bridge.value?.platform?.id);
 const language = computed(() => bridge.value?.platform?.language);
 const payload = computed(() => bridge.value?.platform?.payload);
 const tld = computed(() => bridge.value?.platform?.tld);
-const isAudioEnabled = computed(() => bridge.value?.platform?.isAudioEnabled);
+const isAudioEnabled = ref(false);
+const isPaused = ref(false);
 const isGetAllGamesSupported = computed(
   () => bridge.value?.platform?.isGetAllGamesSupported
 );
@@ -129,4 +131,22 @@ const getGameById = async () => {
     gameData.value = 'Error: ' + error.message;
   }
 };
+
+onMounted(() => {
+  isPaused.value = bridge.value.platform.isPaused;
+  isAudioEnabled.value = bridge.value.platform.isAudioEnabled;
+
+  bridge.value.platform.on(
+    bridge.value.EVENT_NAME.PAUSE_STATE_CHANGED,
+    (value: boolean) => {
+      isPaused.value = value;
+    }
+  );
+  bridge.value.platform.on(
+    bridge.value.EVENT_NAME.AUDIO_STATE_CHANGED,
+    (value: boolean) => {
+      isAudioEnabled.value = value;
+    }
+  );
+});
 </script>

@@ -1,15 +1,28 @@
 <template>
   <div class="info-item">
     <span class="label">{{ label }}</span>
-    <span class="value">{{ value || 'N/A' }}</span>
+    <span class="value">{{ formattedValue }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue';
+
+const props = defineProps<{
   label: string;
   value?: string | number | boolean | null;
 }>();
+
+const formattedValue = computed(() => {
+  if (typeof props.value === 'boolean') {
+    return props.value ? 'true' : 'false';
+  } else if (typeof props.value === 'number') {
+    return props.value.toString();
+  } else if (!props.value) {
+    return 'N/A';
+  }
+  return props.value;
+});
 </script>
 
 <style scoped>
