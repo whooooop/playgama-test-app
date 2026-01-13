@@ -20,6 +20,7 @@
 
     <ButtonGroup>
       <Button @click="getServerTime">Get Server Time</Button>
+      <Button @click="sendGameReady">Send Game Ready</Button>
     </ButtonGroup>
 
     <SubSection title="Send Message">
@@ -93,6 +94,16 @@ const getServerTime = async () => {
   } catch (error) {
     console.error('Error getting server time:', error);
     serverTime.value = 'Error';
+  }
+};
+
+const sendGameReady = async () => {
+  try {
+    const eventName = bridge.value?.PLATFORM_MESSAGE?.GAME_READY || 'game_ready';
+    await window.bridge.platform.sendMessage(eventName);
+    console.log('Game ready event sent successfully');
+  } catch (error) {
+    console.error('Error sending game ready event:', error);
   }
 };
 

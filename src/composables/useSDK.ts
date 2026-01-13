@@ -97,7 +97,9 @@ export function useSDK() {
     }
 
     try {
-      await window.bridge.initialize();
+      await window.bridge.initialize({
+        configFilePath: './config.json',
+      });
       bridge.value = window.bridge;
       isInitialized.value = true;
       console.log('Bridge initialized successfully');
