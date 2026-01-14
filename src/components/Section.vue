@@ -48,7 +48,7 @@ defineProps<{
   height: 3px;
   background: var(
     --gradient-primary,
-    linear-gradient(90deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+    linear-gradient(90deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
   );
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -56,18 +56,18 @@ defineProps<{
 
 .dark .section {
   box-shadow:
-    0 32px 56px -12px rgba(138, 43, 226, 0.2),
-    0 6px 12px -3px rgba(0, 191, 255, 0.15),
+    0 32px 56px -12px rgba(90, 138, 90, 0.12),
+    0 6px 12px -3px rgba(125, 184, 122, 0.08),
     0 0 0 1px var(--border-color);
   background-image:
     radial-gradient(
       circle at top right,
-      rgba(138, 43, 226, 0.05) 0%,
+      rgba(125, 184, 122, 0.03) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(0, 191, 255, 0.05) 0%,
+      rgba(143, 200, 160, 0.03) 0%,
       transparent 50%
     );
 }
@@ -86,9 +86,9 @@ defineProps<{
 
 .dark .section:hover {
   box-shadow:
-    0 32px 56px -12px rgba(138, 43, 226, 0.3),
-    0 6px 12px -3px rgba(0, 191, 255, 0.25),
-    0 0 30px rgba(138, 43, 226, 0.2),
+    0 32px 56px -12px rgba(90, 138, 90, 0.16),
+    0 6px 12px -3px rgba(125, 184, 122, 0.12),
+    0 0 30px rgba(125, 184, 122, 0.1),
     0 0 0 1px var(--border-color);
   transform: translateY(-2px);
 }

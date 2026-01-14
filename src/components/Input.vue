@@ -46,8 +46,8 @@ defineEmits<{
 }
 
 .dark .input:focus {
-  border-color: var(--accent-purple, #8a2be2);
-  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3), 0 0 20px rgba(0, 191, 255, 0.2);
+  border-color: var(--accent-sage, #7db87a);
+  box-shadow: 0 0 0 3px rgba(125, 184, 122, 0.2), 0 0 20px rgba(143, 200, 160, 0.12);
 }
 
 .input:disabled {

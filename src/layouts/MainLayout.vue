@@ -35,17 +35,17 @@ const { isInitialized } = useSDK();
   background-image:
     radial-gradient(
       circle at 20% 30%,
-      rgba(138, 43, 226, 0.15) 0%,
+      rgba(125, 184, 122, 0.07) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 70%,
-      rgba(0, 191, 255, 0.15) 0%,
+      rgba(143, 200, 160, 0.06) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 50% 50%,
-      rgba(255, 20, 147, 0.1) 0%,
+      rgba(90, 138, 90, 0.04) 0%,
       transparent 50%
     );
 }
@@ -83,14 +83,14 @@ const { isInitialized } = useSDK();
 }
 
 .dark .loading-message {
-  color: var(--accent-cyan, #00ffff);
+  color: var(--accent-mint, #8fc8a0);
   background: linear-gradient(
     135deg,
-    rgba(138, 43, 226, 0.2) 0%,
-    rgba(0, 191, 255, 0.2) 100%
+    rgba(125, 184, 122, 0.12) 0%,
+    rgba(143, 200, 160, 0.12) 100%
   );
-  border: 1px solid var(--accent-purple, #8a2be2);
-  box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+  border: 1px solid var(--accent-sage, #7db87a);
+  box-shadow: 0 0 20px rgba(125, 184, 122, 0.15);
 }
 
 @media (max-width: 1024px) {

@@ -57,7 +57,7 @@ defineEmits<{
 }
 
 .dark .checkbox {
-  accent-color: var(--accent-purple, #8a2be2);
+  accent-color: var(--accent-sage, #7db87a);
 }
 
 .checkbox:disabled {

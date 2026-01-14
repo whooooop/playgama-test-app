@@ -121,10 +121,10 @@ const onCustomUrlChange = () => {
 
 .dark .version-selector select:focus,
 .dark .custom-url input:focus {
-  border-color: var(--accent-purple, #8a2be2);
+  border-color: var(--accent-sage, #7db87a);
   box-shadow:
-    0 0 0 2px rgba(138, 43, 226, 0.3),
-    0 0 15px rgba(0, 191, 255, 0.2);
+    0 0 0 2px rgba(125, 184, 122, 0.2),
+    0 0 15px rgba(143, 200, 160, 0.1);
 }
 
 .version-selector select::placeholder,
@@ -148,11 +148,11 @@ const onCustomUrlChange = () => {
 .dark .load-btn {
   background: var(
     --gradient-primary,
-    linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+    linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
   );
   box-shadow:
-    0 2px 8px rgba(138, 43, 226, 0.4),
-    0 0 15px rgba(0, 191, 255, 0.2);
+    0 2px 8px rgba(200, 144, 154, 0.25),
+    0 0 15px rgba(212, 160, 168, 0.15);
 }
 
 .load-btn:hover:not(:disabled) {
@@ -162,8 +162,8 @@ const onCustomUrlChange = () => {
 
 .dark .load-btn:hover:not(:disabled) {
   box-shadow:
-    0 4px 16px rgba(138, 43, 226, 0.6),
-    0 0 25px rgba(0, 191, 255, 0.4);
+    0 4px 16px rgba(200, 144, 154, 0.4),
+    0 0 25px rgba(212, 160, 168, 0.25);
   filter: brightness(1.1);
 }
 
@@ -190,10 +190,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .loading {
-  color: var(--accent-yellow, #ffd700);
-  background: rgba(255, 215, 0, 0.2);
-  border: 1px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  color: var(--accent-sand, #c9b896);
+  background: rgba(201, 184, 150, 0.12);
+  border: 1px solid rgba(201, 184, 150, 0.3);
+  box-shadow: 0 0 10px rgba(201, 184, 150, 0.15);
 }
 
 .current-sdk {
@@ -205,10 +205,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .current-sdk {
-  color: var(--accent-green, #00ff88);
-  background: rgba(0, 255, 136, 0.2);
-  border: 1px solid rgba(0, 255, 136, 0.4);
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+  color: var(--accent-mint, #8fc8a0);
+  background: rgba(143, 200, 160, 0.12);
+  border: 1px solid rgba(143, 200, 160, 0.3);
+  box-shadow: 0 0 10px rgba(143, 200, 160, 0.15);
 }
 
 .error {
@@ -220,10 +220,10 @@ const onCustomUrlChange = () => {
 }
 
 .dark .error {
-  color: var(--accent-pink, #ff1493);
-  background: rgba(255, 20, 147, 0.2);
-  border: 1px solid rgba(255, 20, 147, 0.4);
-  box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+  color: #e0a0a0;
+  background: rgba(200, 130, 130, 0.12);
+  border: 1px solid rgba(200, 130, 130, 0.3);
+  box-shadow: 0 0 10px rgba(200, 130, 130, 0.15);
 }
 
 @media (max-width: 768px) {

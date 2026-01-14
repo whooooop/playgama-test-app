@@ -52,7 +52,7 @@ defineProps<{
   transform: translate(-50%, -50%);
   transition: all 0.3s ease;
   z-index: 1;
-  color: var(--accent-orange);
+  color: var(--accent-sand, #c9b896);
 }
 
 .sub-section h3 {

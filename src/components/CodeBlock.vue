@@ -45,9 +45,9 @@ defineProps<{
 
 .dark .code-block {
   box-shadow: 
-    inset 0 2px 8px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(138, 43, 226, 0.1),
-    inset 0 0 30px rgba(0, 191, 255, 0.05);
+    inset 0 2px 8px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(125, 184, 122, 0.06),
+    inset 0 0 30px rgba(143, 200, 160, 0.03);
   border: 1px solid var(--code-border);
 }
 
@@ -68,7 +68,7 @@ defineProps<{
 }
 
 .dark .code-block::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent-purple, #8a2be2) 0%, var(--accent-blue, #00bfff) 100%);
+  background: linear-gradient(180deg, var(--accent-sage, #7db87a) 0%, var(--accent-rose, #d4a0a8) 100%);
 }
 
 .code-block::-webkit-scrollbar-thumb:hover {
@@ -76,7 +76,7 @@ defineProps<{
 }
 
 .dark .code-block::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--accent-pink, #ff1493) 0%, var(--accent-cyan, #00ffff) 100%);
-  box-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+  background: linear-gradient(180deg, var(--accent-blush, #c8909a) 0%, var(--accent-rose, #d4a0a8) 100%);
+  box-shadow: 0 0 8px rgba(212, 160, 168, 0.35);
 }
 </style>

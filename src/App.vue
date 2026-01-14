@@ -34,32 +34,33 @@ initTheme();
 }
 
 .dark {
-  /* Vibrant dark gaming theme colors */
-  --bg-primary: #0a0a12;
-  --bg-secondary: #151520;
-  --text-primary: #f0f0ff;
-  --text-secondary: #a0a0c0;
-  --border-color: rgba(138, 43, 226, 0.3);
-  --shadow-sm: 0 2px 8px rgba(138, 43, 226, 0.2);
-  --shadow-md: 0 4px 16px rgba(138, 43, 226, 0.3);
-  --shadow-lg: 0 32px 56px -12px rgba(138, 43, 226, 0.4);
-  --code-bg: #0d0d18;
-  --code-text: #e9ecef;
-  --code-border: rgba(138, 43, 226, 0.4);
+  /* Pastel dark theme - green, sand & rose */
+  --bg-primary: #262b28;
+  --bg-secondary: #303634;
+  --text-primary: #e8ebe9;
+  --text-secondary: #a8b0aa;
+  --border-color: rgba(130, 155, 140, 0.3);
+  --shadow-sm: 0 2px 8px rgba(80, 120, 90, 0.12);
+  --shadow-md: 0 4px 16px rgba(80, 120, 90, 0.18);
+  --shadow-lg: 0 32px 56px -12px rgba(80, 120, 90, 0.22);
+  --code-bg: #222826;
+  --code-text: #dce2de;
+  --code-border: rgba(130, 155, 140, 0.35);
   
-  /* Vibrant accent colors */
-  --accent-purple: #8a2be2;
-  --accent-blue: #00bfff;
-  --accent-pink: #ff1493;
-  --accent-cyan: #00ffff;
-  --accent-orange: #ff6b35;
-  --accent-green: #00ff88;
-  --accent-yellow: #ffd700;
+  /* Pastel accent colors - green, sand & rose */
+  --accent-sage: #7db87a;
+  --accent-olive: #94a878;
+  --accent-sand: #c9b896;
+  --accent-cream: #ddd5c4;
+  --accent-moss: #5a8a5a;
+  --accent-mint: #8fc8a0;
+  --accent-rose: #d4a0a8;
+  --accent-blush: #c8909a;
   
-  /* Gradient colors */
-  --gradient-primary: linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%);
-  --gradient-secondary: linear-gradient(135deg, #00bfff 0%, #00ffff 100%);
-  --gradient-accent: linear-gradient(135deg, #ff1493 0%, #ff6b35 100%);
+  /* Gradient colors - with rose */
+  --gradient-primary: linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%);
+  --gradient-secondary: linear-gradient(135deg, #8fc8a0 0%, #d4a0a8 100%);
+  --gradient-accent: linear-gradient(135deg, #94a878 0%, #c9b896 100%);
 }
 
 body {
@@ -78,8 +79,8 @@ body {
 
 .dark body {
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 10% 20%, rgba(125, 184, 122, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(143, 200, 160, 0.05) 0%, transparent 50%);
 }
 
 #app {

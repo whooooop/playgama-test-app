@@ -124,11 +124,11 @@ const isActive = (path: string) => {
   height: 200px;
   background: linear-gradient(
     180deg,
-    var(--accent-purple, #8a2be2) 0%,
-    var(--accent-blue, #00bfff) 100%
+    var(--accent-sage, #7db87a) 0%,
+    var(--accent-rose, #d4a0a8) 100%
   );
   border-radius: 0 3px 3px 0;
-  box-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 10px rgba(200, 144, 154, 0.4);
   transition: opacity 0.3s ease;
 }
 
@@ -148,8 +148,8 @@ const isActive = (path: string) => {
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow:
-    2px 0 16px rgba(138, 43, 226, 0.3),
-    inset -2px 0 20px rgba(0, 191, 255, 0.1);
+    2px 0 16px rgba(90, 138, 90, 0.15),
+    inset -2px 0 20px rgba(143, 200, 160, 0.06);
   transform-style: preserve-3d;
   transform-origin: left center;
   transform: translateX(-150px) translateY(-50%) perspective(1200px)
@@ -159,12 +159,12 @@ const isActive = (path: string) => {
   background-image:
     radial-gradient(
       circle at 20% 50%,
-      rgba(138, 43, 226, 0.1) 0%,
+      rgba(125, 184, 122, 0.06) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(0, 191, 255, 0.1) 0%,
+      rgba(143, 200, 160, 0.04) 0%,
       transparent 50%
     );
 }
@@ -196,24 +196,24 @@ const isActive = (path: string) => {
 .nav-item:hover {
   background: linear-gradient(
     135deg,
-    rgba(138, 43, 226, 0.2) 0%,
-    rgba(0, 191, 255, 0.2) 100%
+    rgba(125, 184, 122, 0.15) 0%,
+    rgba(143, 200, 160, 0.15) 100%
   );
   color: var(--text-primary);
-  border-left: 3px solid var(--accent-purple, #8a2be2);
+  border-left: 3px solid var(--accent-sage, #7db87a);
   transform: translateX(4px);
 }
 
 .nav-item.active {
   background: var(
     --gradient-primary,
-    linear-gradient(135deg, #8a2be2 0%, #00bfff 50%, #ff1493 100%)
+    linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
   );
-  color: white;
+  color: #1e2420;
   box-shadow:
-    0 4px 12px rgba(138, 43, 226, 0.5),
-    0 0 20px rgba(0, 191, 255, 0.3);
-  border-left: 3px solid var(--accent-cyan, #00ffff);
+    0 4px 12px rgba(200, 144, 154, 0.3),
+    0 0 20px rgba(212, 160, 168, 0.2);
+  border-left: 3px solid var(--accent-rose, #d4a0a8);
 }
 
 .nav-icon {
@@ -238,8 +238,8 @@ const isActive = (path: string) => {
 .sidebar::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    var(--accent-purple, #8a2be2) 0%,
-    var(--accent-blue, #00bfff) 100%
+    var(--accent-sage, #7db87a) 0%,
+    var(--accent-rose, #d4a0a8) 100%
   );
   border-radius: 3px;
 }
@@ -247,9 +247,9 @@ const isActive = (path: string) => {
 .sidebar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
-    var(--accent-pink, #ff1493) 0%,
-    var(--accent-cyan, #00ffff) 100%
+    var(--accent-blush, #c8909a) 0%,
+    var(--accent-rose, #d4a0a8) 100%
   );
-  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+  box-shadow: 0 0 10px rgba(212, 160, 168, 0.35);
 }
 </style>
