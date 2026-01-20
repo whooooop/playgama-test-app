@@ -16,17 +16,17 @@ defineEmits<{
 
 <style scoped>
 .btn {
-  padding: 12px 20px;
-  background: var(--gradient-primary, linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%));
-  color: #1e2420;
+  padding: 12px 24px;
+  background: var(--gradient-primary, linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%));
+  color: #ffffff;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(200, 144, 154, 0.25), 0 0 20px rgba(212, 160, 168, 0.15);
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35), 0 0 25px rgba(236, 72, 153, 0.15);
+  letter-spacing: 0.02em;
   font-family: inherit;
   position: relative;
   overflow: hidden;
@@ -39,7 +39,7 @@ defineEmits<{
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
   transition: left 0.5s ease;
 }
 
@@ -48,14 +48,14 @@ defineEmits<{
 }
 
 .btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(200, 144, 154, 0.4), 0 0 30px rgba(212, 160, 168, 0.25);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45), 0 0 40px rgba(236, 72, 153, 0.25);
   filter: brightness(1.1);
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(200, 144, 154, 0.25), 0 0 20px rgba(212, 160, 168, 0.15);
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35), 0 0 25px rgba(236, 72, 153, 0.15);
 }
 
 .btn:disabled {
@@ -63,6 +63,6 @@ defineEmits<{
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 </style>

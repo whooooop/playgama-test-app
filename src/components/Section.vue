@@ -19,16 +19,15 @@ defineProps<{
   background: var(--bg-secondary);
   padding: 32px;
   margin: 20px 0;
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.02),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px var(--border-color);
+    0 20px 40px -12px rgba(99, 102, 241, 0.1),
+    0 8px 16px -4px rgba(139, 92, 246, 0.08),
+    0 0 0 1px var(--border-color);
   transition:
     background-color 0.3s ease,
     box-shadow 0.3s ease,
-    transform 0.2s ease;
+    transform 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -45,60 +44,79 @@ defineProps<{
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 4px;
   background: var(
     --gradient-primary,
-    linear-gradient(90deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
+    linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)
   );
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 1;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.section::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .dark .section {
   box-shadow:
-    0 32px 56px -12px rgba(90, 138, 90, 0.12),
-    0 6px 12px -3px rgba(125, 184, 122, 0.08),
+    0 25px 50px -12px rgba(99, 102, 241, 0.2),
+    0 10px 20px -4px rgba(139, 92, 246, 0.15),
     0 0 0 1px var(--border-color);
   background-image:
     radial-gradient(
       circle at top right,
-      rgba(125, 184, 122, 0.03) 0%,
+      rgba(99, 102, 241, 0.06) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at bottom left,
-      rgba(143, 200, 160, 0.03) 0%,
+      rgba(236, 72, 153, 0.04) 0%,
       transparent 50%
     );
 }
 
-.dark .section::before {
-  opacity: 1;
-}
-
 .section:hover {
   box-shadow:
-    0 32px 56px -12px rgba(0, 0, 0, 0.06),
-    0 6px 12px -3px rgba(0, 0, 0, 0.02),
-    0 3px 6px -1.5px rgba(0, 0, 0, 0.01),
-    0 0 0 0.75px var(--border-color);
-}
-
-.dark .section:hover {
-  box-shadow:
-    0 32px 56px -12px rgba(90, 138, 90, 0.16),
-    0 6px 12px -3px rgba(125, 184, 122, 0.12),
-    0 0 30px rgba(125, 184, 122, 0.1),
+    0 25px 50px -12px rgba(99, 102, 241, 0.15),
+    0 10px 20px -4px rgba(139, 92, 246, 0.1),
     0 0 0 1px var(--border-color);
   transform: translateY(-2px);
 }
 
+.section:hover::before {
+  height: 5px;
+}
+
+.dark .section:hover {
+  box-shadow:
+    0 30px 60px -12px rgba(99, 102, 241, 0.25),
+    0 15px 30px -4px rgba(139, 92, 246, 0.2),
+    0 0 40px rgba(99, 102, 241, 0.1),
+    0 0 0 1px var(--border-color);
+  transform: translateY(-4px);
+}
+
 .section h2 {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Responsive adjustments */
@@ -106,6 +124,7 @@ defineProps<{
   .section {
     padding: 20px;
     margin: 16px 0;
+    border-radius: 16px;
   }
 }
 </style>

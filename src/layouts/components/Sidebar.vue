@@ -124,12 +124,18 @@ const isActive = (path: string) => {
   height: 200px;
   background: linear-gradient(
     180deg,
-    var(--accent-sage, #7db87a) 0%,
-    var(--accent-rose, #d4a0a8) 100%
+    var(--accent-primary, #6366f1) 0%,
+    var(--accent-pink, #ec4899) 100%
   );
-  border-radius: 0 3px 3px 0;
-  box-shadow: 0 0 10px rgba(200, 144, 154, 0.4);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
   transition: opacity 0.3s ease;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
+  to { box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
 }
 
 .sidebar-wrapper:hover .sidebar-hover-area::before {
@@ -144,12 +150,12 @@ const isActive = (path: string) => {
   background: var(--bg-secondary);
   border-right: 2px solid var(--border-color);
   padding: 24px 16px;
-  border-radius: 0 16px 16px 0;
+  border-radius: 0 20px 20px 0;
   overflow-y: auto;
   overflow-x: hidden;
   box-shadow:
-    2px 0 16px rgba(90, 138, 90, 0.15),
-    inset -2px 0 20px rgba(143, 200, 160, 0.06);
+    4px 0 24px rgba(99, 102, 241, 0.15),
+    inset -2px 0 20px rgba(139, 92, 246, 0.05);
   transform-style: preserve-3d;
   transform-origin: left center;
   transform: translateX(-150px) translateY(-50%) perspective(1200px)
@@ -159,14 +165,20 @@ const isActive = (path: string) => {
   background-image:
     radial-gradient(
       circle at 20% 50%,
-      rgba(125, 184, 122, 0.06) 0%,
+      rgba(99, 102, 241, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 80%,
-      rgba(143, 200, 160, 0.04) 0%,
+      rgba(236, 72, 153, 0.05) 0%,
       transparent 50%
     );
+}
+
+.dark .sidebar {
+  box-shadow:
+    4px 0 30px rgba(99, 102, 241, 0.2),
+    inset -2px 0 20px rgba(139, 92, 246, 0.08);
 }
 
 .sidebar-wrapper:hover .sidebar {
@@ -189,31 +201,32 @@ const isActive = (path: string) => {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   cursor: pointer;
+  border-left: 3px solid transparent;
 }
 
 .nav-item:hover {
   background: linear-gradient(
     135deg,
-    rgba(125, 184, 122, 0.15) 0%,
-    rgba(143, 200, 160, 0.15) 100%
+    rgba(99, 102, 241, 0.12) 0%,
+    rgba(139, 92, 246, 0.12) 100%
   );
   color: var(--text-primary);
-  border-left: 3px solid var(--accent-sage, #7db87a);
+  border-left: 3px solid var(--accent-primary, #6366f1);
   transform: translateX(4px);
 }
 
 .nav-item.active {
   background: var(
     --gradient-primary,
-    linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
+    linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%)
   );
-  color: #1e2420;
+  color: #ffffff;
   box-shadow:
-    0 4px 12px rgba(200, 144, 154, 0.3),
-    0 0 20px rgba(212, 160, 168, 0.2);
-  border-left: 3px solid var(--accent-rose, #d4a0a8);
+    0 4px 15px rgba(99, 102, 241, 0.4),
+    0 0 25px rgba(236, 72, 153, 0.2);
+  border-left: 3px solid var(--accent-pink, #ec4899);
 }
 
 .nav-icon {
@@ -238,8 +251,8 @@ const isActive = (path: string) => {
 .sidebar::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    var(--accent-sage, #7db87a) 0%,
-    var(--accent-rose, #d4a0a8) 100%
+    var(--accent-primary, #6366f1) 0%,
+    var(--accent-pink, #ec4899) 100%
   );
   border-radius: 3px;
 }
@@ -247,9 +260,9 @@ const isActive = (path: string) => {
 .sidebar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
-    var(--accent-blush, #c8909a) 0%,
-    var(--accent-rose, #d4a0a8) 100%
+    var(--accent-secondary, #8b5cf6) 0%,
+    var(--accent-pink, #ec4899) 100%
   );
-  box-shadow: 0 0 10px rgba(212, 160, 168, 0.35);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
 }
 </style>

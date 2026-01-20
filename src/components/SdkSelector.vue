@@ -84,27 +84,28 @@ const onCustomUrlChange = () => {
 <style scoped>
 .selector-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   margin-bottom: 10px;
 }
 
 .version-selector select,
 .custom-url input {
-  padding: 8px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
+  padding: 10px 14px;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
   font-size: 0.9em;
   transition:
     border-color 0.3s ease,
     background-color 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    box-shadow 0.3s ease;
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
 .version-selector select {
-  min-width: 120px;
+  min-width: 140px;
 }
 
 .custom-url input {
@@ -115,16 +116,18 @@ const onCustomUrlChange = () => {
 .version-selector select:focus,
 .custom-url input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+  border-color: var(--accent-primary, #6366f1);
+  box-shadow: 
+    0 0 0 3px rgba(99, 102, 241, 0.15),
+    0 0 20px rgba(99, 102, 241, 0.1);
 }
 
 .dark .version-selector select:focus,
 .dark .custom-url input:focus {
-  border-color: var(--accent-sage, #7db87a);
+  border-color: var(--accent-primary, #818cf8);
   box-shadow:
-    0 0 0 2px rgba(125, 184, 122, 0.2),
-    0 0 15px rgba(143, 200, 160, 0.1);
+    0 0 0 3px rgba(129, 140, 248, 0.2),
+    0 0 25px rgba(129, 140, 248, 0.15);
 }
 
 .version-selector select::placeholder,
@@ -134,36 +137,37 @@ const onCustomUrlChange = () => {
 }
 
 .load-btn {
-  padding: 8px 12px;
+  padding: 10px 16px;
   border: none;
-  border-radius: 6px;
-  font-size: 1em;
+  border-radius: 10px;
+  font-size: 1.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(45deg, #28a745, #20c997);
+  background: var(--gradient-success, linear-gradient(135deg, #22c55e 0%, #14b8a6 100%));
   color: white;
-  min-width: 40px;
+  min-width: 48px;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 
 .dark .load-btn {
   background: var(
-    --gradient-primary,
-    linear-gradient(135deg, #7db87a 0%, #c8909a 50%, #d4a0a8 100%)
+    --gradient-success,
+    linear-gradient(135deg, #4ade80 0%, #2dd4bf 100%)
   );
   box-shadow:
-    0 2px 8px rgba(200, 144, 154, 0.25),
-    0 0 15px rgba(212, 160, 168, 0.15);
+    0 4px 15px rgba(74, 222, 128, 0.3),
+    0 0 20px rgba(45, 212, 191, 0.15);
 }
 
 .load-btn:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
 }
 
 .dark .load-btn:hover:not(:disabled) {
   box-shadow:
-    0 4px 16px rgba(200, 144, 154, 0.4),
-    0 0 25px rgba(212, 160, 168, 0.25);
+    0 8px 25px rgba(74, 222, 128, 0.4),
+    0 0 30px rgba(45, 212, 191, 0.25);
   filter: brightness(1.1);
 }
 
@@ -172,58 +176,67 @@ const onCustomUrlChange = () => {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .status-info {
   display: inline-block;
   font-size: 0.9em;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 
 .loading {
-  color: #856404;
-  background: #fff3cd;
-  padding: 5px 10px;
-  border-radius: 4px;
+  color: var(--accent-orange, #f59e0b);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.15) 100%);
+  padding: 6px 12px;
+  border-radius: 8px;
   display: inline-block;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 .dark .loading {
-  color: var(--accent-sand, #c9b896);
-  background: rgba(201, 184, 150, 0.12);
-  border: 1px solid rgba(201, 184, 150, 0.3);
-  box-shadow: 0 0 10px rgba(201, 184, 150, 0.15);
+  color: var(--accent-yellow, #fde047);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(253, 224, 71, 0.15) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
 }
 
 .current-sdk {
-  color: #155724;
-  background: #d4edda;
-  padding: 5px 10px;
-  border-radius: 4px;
+  color: var(--accent-green, #22c55e);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%);
+  padding: 6px 12px;
+  border-radius: 8px;
   display: inline-block;
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .dark .current-sdk {
-  color: var(--accent-mint, #8fc8a0);
-  background: rgba(143, 200, 160, 0.12);
-  border: 1px solid rgba(143, 200, 160, 0.3);
-  box-shadow: 0 0 10px rgba(143, 200, 160, 0.15);
+  color: var(--accent-green, #4ade80);
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(45, 212, 191, 0.15) 100%);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.15);
 }
 
 .error {
-  color: #721c24;
-  background: #f8d7da;
-  padding: 5px 10px;
-  border-radius: 4px;
+  color: var(--accent-red, #ef4444);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+  padding: 6px 12px;
+  border-radius: 8px;
   display: inline-block;
+  border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .dark .error {
-  color: #e0a0a0;
-  background: rgba(200, 130, 130, 0.12);
-  border: 1px solid rgba(200, 130, 130, 0.3);
-  box-shadow: 0 0 10px rgba(200, 130, 130, 0.15);
+  color: var(--accent-red, #f87171);
+  background: linear-gradient(135deg, rgba(248, 113, 113, 0.15) 0%, rgba(244, 114, 182, 0.15) 100%);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.15);
 }
 
 @media (max-width: 768px) {

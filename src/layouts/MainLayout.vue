@@ -29,23 +29,39 @@ const { isInitialized } = useSDK();
   background: var(--bg-primary);
   transition: background-color 0.3s ease;
   position: relative;
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(99, 102, 241, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(236, 72, 153, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(139, 92, 246, 0.05) 0%,
+      transparent 50%
+    );
 }
 
 .dark .main-layout {
   background-image:
     radial-gradient(
       circle at 20% 30%,
-      rgba(125, 184, 122, 0.07) 0%,
+      rgba(99, 102, 241, 0.12) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 80% 70%,
-      rgba(143, 200, 160, 0.06) 0%,
+      rgba(236, 72, 153, 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       circle at 50% 50%,
-      rgba(90, 138, 90, 0.04) 0%,
+      rgba(139, 92, 246, 0.06) 0%,
       transparent 50%
     );
 }
@@ -75,22 +91,34 @@ const { isInitialized } = useSDK();
 
 .loading-message {
   font-size: 16px;
-  color: #856404;
-  background: #fff3cd;
+  color: var(--accent-primary, #6366f1);
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.15) 0%,
+    rgba(139, 92, 246, 0.15) 100%
+  );
   padding: 16px 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: inline-block;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.02); }
 }
 
 .dark .loading-message {
-  color: var(--accent-mint, #8fc8a0);
+  color: var(--accent-primary, #818cf8);
   background: linear-gradient(
     135deg,
-    rgba(125, 184, 122, 0.12) 0%,
-    rgba(143, 200, 160, 0.12) 100%
+    rgba(129, 140, 248, 0.15) 0%,
+    rgba(167, 139, 250, 0.15) 100%
   );
-  border: 1px solid var(--accent-sage, #7db87a);
-  box-shadow: 0 0 20px rgba(125, 184, 122, 0.15);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  box-shadow: 0 0 30px rgba(129, 140, 248, 0.2);
 }
 
 @media (max-width: 1024px) {

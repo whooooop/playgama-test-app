@@ -10,6 +10,7 @@ export const availableVersions = [
   'v1.26.0',
   'v1.27.0',
   'v1.27.1',
+  'v1.28.0',
 ];
 
 // Singleton state for bridge
@@ -119,6 +120,11 @@ export function useSDK() {
     const sdkUrl = getSdkUrl();
 
     // Check if SDK is already loaded
+    console.log('document.currentScript', document.currentScript)
+    // @ts-ignore
+    window.__webpack_public_path__ = 'http://localhost:9000/'
+    // @ts-ignore
+    console.log('__webpack_public_path__', window.__webpack_public_path__)
     const existingScript = document.querySelector(`script[src="${sdkUrl}"]`);
     if (existingScript) {
       console.log('SDK already loaded:', sdkUrl);

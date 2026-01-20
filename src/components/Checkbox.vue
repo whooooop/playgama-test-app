@@ -31,11 +31,12 @@ defineEmits<{
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   font-size: 14px;
   color: var(--text-secondary);
   user-select: none;
+  transition: color 0.2s ease;
 }
 
 .checkbox-label:hover {
@@ -44,20 +45,33 @@ defineEmits<{
 
 .checkbox-label:has(.checkbox:disabled) {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .checkbox {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  accent-color: #667eea;
-  border-radius: 4px;
+  accent-color: var(--accent-primary, #6366f1);
+  border-radius: 6px;
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.checkbox:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.checkbox:checked {
+  accent-color: var(--accent-secondary, #8b5cf6);
 }
 
 .dark .checkbox {
-  accent-color: var(--accent-sage, #7db87a);
+  accent-color: var(--accent-primary, #818cf8);
+}
+
+.dark .checkbox:checked {
+  accent-color: var(--accent-secondary, #a78bfa);
 }
 
 .checkbox:disabled {
