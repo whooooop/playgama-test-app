@@ -118,13 +118,6 @@ export function useSDK() {
     }
 
     const sdkUrl = getSdkUrl();
-
-    // Check if SDK is already loaded
-    console.log('document.currentScript', document.currentScript)
-    // @ts-ignore
-    window.__webpack_public_path__ = 'http://localhost:9000/'
-    // @ts-ignore
-    console.log('__webpack_public_path__', window.__webpack_public_path__)
     const existingScript = document.querySelector(`script[src="${sdkUrl}"]`);
     if (existingScript) {
       console.log('SDK already loaded:', sdkUrl);
@@ -166,6 +159,24 @@ export function useSDK() {
           // Initialize bridge after SDK is loaded
           if (window.bridge) {
             try {
+              // window.addEventListener('message', (event) => {
+              //   console.log(JSON.stringify(event.data))
+              //   if (event.data.action === 'initialize' && event.data.source === 'bridge') {
+              //     window.postMessage({"source":"platform","type":"platform","action":"initialize", "supportedFeatures": [], "config": { "internalStoragePolicy": "authorized_only", "leaderboardsType": "not_available", "platformLanguage": "en" }, "purchases": []})
+              //   } else if (event.data.action === 'get_player' && event.data.source === 'bridge') {
+              //     window.postMessage({"source":"platform","type":"player","action":"get_player", "id": event.data.id, "player": {
+              //       isAuthorized: true,
+              //       name: 'Test user',
+              //       userId: '32442002f2r02kt',
+              //       photos: [
+              //           'https://placehold.co/56x56',
+              //           'https://placehold.co/84x84',
+              //           'https://placehold.co/200x200',
+              //       ],
+              //       jwt: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IlBHX1JTQV9WMSJ9.eyJuYW1lIjoiVGVzdCB1c2VyIiwiaWQiOiIzMjQ0MjAwMmYycjAya3QiLCJ1dWlkIjoiYTU5NzcwYzktMzYwMi00ZTA5LTg0OWQtZmJhYmVmYWQ4MTVkIiwicGhvdG9zIjpbXSwiZ29sZEJhbGFuY2UiOjEsImlzQXV0aG9yaXplZCI6dHJ1ZSwiaWF0IjoxNzU3MzQ0MDA4LCJleHAiOjE5MTUxMzIwMDh9.FCVwdNX16wwkow1BkYUEu4Pld6hHZr8ZSWJ5olF3zZsLk_iNxWjXn9DUJD34JFN_sMovqwsM4yVU68TJr9ysTnZgqkvFKczHlLSRybmQk36IT_VfOeBTPbIaxbQ4CWsiffZT_GwE5ylyE-X7YHlBbd7B8v4ezPiV5EaHwCJb3GKRxsITV1-Qu5H7zxGtk0cGkUuOF-3vXDjWxmj19Tjr7Y1yau6YpS2hxqkVOmJKnG7X6l5XdeVNLvYnIImlcECp9paaY0Q_6W4Dm8ialGPEqEbXOOavXzAxhe0LEXAx_fHkWelzdTwiwHdURHbE61qSwuFIDOkuvNRMqh4n7KhP7g',
+              //     }})
+              //   }
+              // })
               await initializeBridge();
               resolve();
             } catch (err: any) {

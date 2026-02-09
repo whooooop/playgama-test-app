@@ -46,5 +46,12 @@
       "priceValue": 1000
     }
   ],
-  "leaderboards": []
+  "leaderboards": [
+    {
+      "id": "coins"
+    },
+    {
+      "id": "time"
+    }
+  ]
 }
