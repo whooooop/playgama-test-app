@@ -17,6 +17,7 @@
         label="Is PlatformInternal Available:"
         :value="isPlatformInternalAvailable"
       />
+      <InfoItem label="Default Storage Type:" :value="defaultStorageType" />
     </InfoGrid>
 
     <SubSection title="Storage Actions">
@@ -26,6 +27,7 @@
       </InputGroup>
 
       <Select v-model="storageType">
+        <option value="default">Default</option>
         <option value="local_storage">LocalStorage</option>
         <option value="platform_internal">PlatformInternal</option>
       </Select>
@@ -66,9 +68,6 @@
     <SubSection title="Multiple Keys Operations">
       <InputGroup>
         <Input v-model="multipleKeys" placeholder="Keys (comma separated)" />
-      </InputGroup>
-
-      <InputGroup>
         <Input
           v-model="multipleValues"
           placeholder="Values (comma separated)"
@@ -138,9 +137,14 @@ const isPlatformInternalAvailable = computed(() => {
   );
 });
 
+const defaultStorageType = computed(() => {
+  if (!bridge.value) return null;
+  return bridge.value.storage.defaultType;
+});
+
 const coinsValue = ref('');
 const levelValue = ref('');
-const storageType = ref('local_storage');
+const storageType = ref('default');
 const storageStatus = ref('');
 
 const singleKey = ref('');
@@ -162,10 +166,9 @@ const getStorageData = async () => {
       storageType.value
     );
 
-    const data = await bridge.value.storage.get(
-      ['coins', 'level'],
-      storageType.value
-    );
+    const type =
+      storageType.value === 'default' ? undefined : storageType.value;
+    const data = await bridge.value.storage.get(['coins', 'level'], type);
 
     console.log('✅ Storage data received:', data);
 
@@ -194,10 +197,12 @@ const setStorageData = async () => {
       storageType.value
     );
 
+    const type =
+      storageType.value === 'default' ? undefined : storageType.value;
     await bridge.value.storage.set(
       ['coins', 'level'],
       [coinsValue.value, levelValue.value],
-      storageType.value
+      type
     );
 
     console.log('✅ Storage data saved successfully');
@@ -219,7 +224,9 @@ const deleteStorageData = async () => {
       storageType.value
     );
 
-    await bridge.value.storage.delete(['coins', 'level'], storageType.value);
+    const type =
+      storageType.value === 'default' ? undefined : storageType.value;
+    await bridge.value.storage.delete(['coins', 'level'], type);
 
     console.log('✅ Storage data deleted successfully');
     coinsValue.value = '';
@@ -235,12 +242,9 @@ const getSingleKey = async () => {
   if (!bridge.value || !singleKey.value) return;
 
   try {
-    console.log('🔍 Getting single key:', singleKey.value, storageType.value);
+    console.log('🔍 Getting single key:', singleKey.value);
 
-    const data = await bridge.value.storage.get(
-      singleKey.value,
-      storageType.value
-    );
+    const data = await bridge.value.storage.get(singleKey.value);
 
     console.log('✅ Single key data received:', data);
     singleKeyResult.value = JSON.stringify(data, null, 2);
@@ -254,18 +258,9 @@ const setSingleKey = async () => {
   if (!bridge.value || !singleKey.value) return;
 
   try {
-    console.log(
-      '💾 Setting single key:',
-      singleKey.value,
-      singleValue.value,
-      storageType.value
-    );
+    console.log('💾 Setting single key:', singleKey.value, singleValue.value);
 
-    await bridge.value.storage.set(
-      [singleKey.value],
-      [singleValue.value],
-      storageType.value
-    );
+    await bridge.value.storage.set([singleKey.value], [singleValue.value]);
 
     console.log('✅ Single key saved successfully');
     singleKeyResult.value = 'Key saved successfully';
@@ -279,9 +274,9 @@ const deleteSingleKey = async () => {
   if (!bridge.value || !singleKey.value) return;
 
   try {
-    console.log('🗑️ Deleting single key:', singleKey.value, storageType.value);
+    console.log('🗑️ Deleting single key:', singleKey.value);
 
-    await bridge.value.storage.delete([singleKey.value], storageType.value);
+    await bridge.value.storage.delete(singleKey.value);
 
     console.log('✅ Single key deleted successfully');
     singleKeyResult.value = 'Key deleted successfully';
@@ -297,9 +292,9 @@ const getMultipleKeys = async () => {
 
   try {
     const keys = multipleKeys.value.split(',').map(key => key.trim());
-    console.log('🔍 Getting multiple keys:', keys, storageType.value);
+    console.log('🔍 Getting multiple keys:', keys);
 
-    const data = await bridge.value.storage.get(keys, storageType.value);
+    const data = await bridge.value.storage.get(keys);
 
     console.log('✅ Multiple keys data received:', data);
     multipleKeysResult.value = JSON.stringify(data, null, 2);
@@ -316,9 +311,9 @@ const setMultipleKeys = async () => {
     const keys = multipleKeys.value.split(',').map(key => key.trim());
     const values = multipleValues.value.split(',').map(value => value.trim());
 
-    console.log('💾 Setting multiple keys:', keys, values, storageType.value);
+    console.log('💾 Setting multiple keys:', keys, values);
 
-    await bridge.value.storage.set(keys, values, storageType.value);
+    await bridge.value.storage.set(keys, values);
 
     console.log('✅ Multiple keys saved successfully');
     multipleKeysResult.value = 'Keys saved successfully';
@@ -333,9 +328,9 @@ const deleteMultipleKeys = async () => {
 
   try {
     const keys = multipleKeys.value.split(',').map(key => key.trim());
-    console.log('🗑️ Deleting multiple keys:', keys, storageType.value);
+    console.log('🗑️ Deleting multiple keys:', keys);
 
-    await bridge.value.storage.delete(keys, storageType.value);
+    await bridge.value.storage.delete(keys);
 
     console.log('✅ Multiple keys deleted successfully');
     multipleKeysResult.value = 'Keys deleted successfully';
