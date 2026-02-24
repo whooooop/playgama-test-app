@@ -40,11 +40,14 @@
   "payments": [
     {
       "id": "1",
-      "name": "1000 Gam",
-      "price": "1000",
+      "amount": "1000",
       "priceCurrencyCode": "Gam",
-      "priceCurrencyImage": "https://games.playgama.com/assets/gold-fennec-coin-large.webp",
-      "priceValue": 1000
+      "externalId": "external-from-config"
+    },
+    {
+      "id": "2",
+      "amount": "2000",
+      "priceCurrencyCode": "Gam"
     }
   ],
   "leaderboards": [

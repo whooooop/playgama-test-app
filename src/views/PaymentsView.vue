@@ -92,7 +92,9 @@ const purchase = async () => {
   if (!bridge.value?.payments || !paymentId.value) return;
 
   try {
-    const result = await bridge.value.payments.purchase(paymentId.value);
+    const result = await bridge.value.payments.purchase(paymentId.value, {
+      externalId: 'external-id',
+    });
     purchaseStatus.value = JSON.stringify(result, undefined, 2);
   } catch (error: any) {
     console.error('Error purchasing:', error);
