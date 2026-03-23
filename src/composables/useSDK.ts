@@ -12,6 +12,7 @@ export const availableVersions = [
   'v1.27.1',
   'v1.28.0',
   'v1.29.0',
+  'v1.30.0',
 ];
 
 // Singleton state for bridge
@@ -109,16 +110,16 @@ export function useSDK() {
       // Send game ready event to SDK after 30 seconds
       setTimeout(() => {
         try {
-          const b = bridge.value ?? window.bridge;
-          if (b?.platform?.sendMessage) {
-            const eventName = b.PLATFORM_MESSAGE?.GAME_READY || 'game_ready';
-            b.platform.sendMessage(eventName);
-            console.log('Game ready event sent to SDK (after 30s)');
-          }
+          window.bridge.platform.sendMessage(
+            window.bridge.PLATFORM_MESSAGE?.GAME_READY
+          );
+          console.log(
+            `${window.bridge.PLATFORM_MESSAGE?.GAME_READY} event sent to SDK (after 10s)`
+          );
         } catch (err) {
           console.error('Failed to send game ready event:', err);
         }
-      }, 30_000);
+      }, 10_000);
     } catch (err: any) {
       console.error('Bridge initialization failed:', err);
       throw new Error('Bridge initialization failed: ' + err.message);
