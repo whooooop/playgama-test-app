@@ -67,6 +67,31 @@
       </ButtonGroup>
     </SubSection>
 
+    <!-- Advanced Banners -->
+    <SubSection
+      title="Advanced Banners"
+      description="Advanced banners work through platform messages + config. Sending a message triggers the SDK to look up advancedBanners config, resolve the best variant by device/orientation/screen size, and show or hide banners accordingly."
+    >
+      <InfoGrid>
+        <InfoItem label="Show Message:" value="level_paused" />
+        <InfoItem label="Hide Message:" value="level_resumed" />
+        <InfoItem label="Last Action:" :value="advancedBannersLastAction" />
+      </InfoGrid>
+      <InputGroup>
+        <Input
+          v-model="advancedBannersMessage"
+          placeholder="Custom message (e.g. level_paused)"
+        />
+      </InputGroup>
+      <ButtonGroup>
+        <Button @click="showAdvancedBanners">Show (level_paused)</Button>
+        <Button @click="hideAdvancedBanners">Hide (level_resumed)</Button>
+        <Button @click="sendCustomAdvancedBannerMessage" :disabled="!advancedBannersMessage">
+          Send Custom Message
+        </Button>
+      </ButtonGroup>
+    </SubSection>
+
     <!-- AdBlock Detection -->
     <SubSection title="AdBlock Detection">
       <ButtonGroup>
@@ -116,6 +141,43 @@ const rewardedStates = ref<string>('');
 const lastBannerStates = ref<string[]>([]);
 const lastInterstitialStates = ref<string[]>([]);
 const lastRewardedStates = ref<string[]>([]);
+
+// Advanced Banners
+const advancedBannersMessage = ref('');
+const advancedBannersLastAction = ref<string | null>(null);
+
+const showAdvancedBanners = async () => {
+  if (!bridge.value?.platform) return;
+  try {
+    await bridge.value.platform.sendMessage('level_paused');
+    advancedBannersLastAction.value = 'show (level_paused)';
+  } catch (error: any) {
+    console.error('Error sending level_paused:', error);
+    advancedBannersLastAction.value = `Error: ${error.message}`;
+  }
+};
+
+const hideAdvancedBanners = async () => {
+  if (!bridge.value?.platform) return;
+  try {
+    await bridge.value.platform.sendMessage('level_resumed');
+    advancedBannersLastAction.value = 'hide (level_resumed)';
+  } catch (error: any) {
+    console.error('Error sending level_resumed:', error);
+    advancedBannersLastAction.value = `Error: ${error.message}`;
+  }
+};
+
+const sendCustomAdvancedBannerMessage = async () => {
+  if (!bridge.value?.platform || !advancedBannersMessage.value) return;
+  try {
+    await bridge.value.platform.sendMessage(advancedBannersMessage.value);
+    advancedBannersLastAction.value = `sent: ${advancedBannersMessage.value}`;
+  } catch (error: any) {
+    console.error('Error sending custom message:', error);
+    advancedBannersLastAction.value = `Error: ${error.message}`;
+  }
+};
 
 // Methods
 const setMinimumDelay = () => {
