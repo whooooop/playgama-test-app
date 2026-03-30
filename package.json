@@ -1,6 +1,6 @@
 {
   "name": "playgama-bridge-test",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Simple application for testing browser game SDK",
   "main": "index.js",
   "scripts": {
