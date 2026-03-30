@@ -1,12 +1,13 @@
 <template>
+  <HiddenCanvas />
   <MainLayout />
 </template>
 
 <script setup lang="ts">
 import MainLayout from './layouts/MainLayout.vue';
+import HiddenCanvas from './components/HiddenCanvas.vue';
 import { initTheme } from './composables/useTheme';
 
-// Initialize theme system
 initTheme();
 </script>
 
