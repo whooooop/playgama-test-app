@@ -1,15 +1,92 @@
 <template>
   <HiddenCanvas />
   <MainLayout />
+  <img v-if="!showLoader" :src="logoUrl" class="app-logo" alt="logo" />
+  <div v-if="!showLoader" class="app-version">v{{ appVersion }}</div>
+  <div v-if="showLoader" class="app-loader">
+    <img :src="logoUrl" class="app-loader-logo" alt="logo" />
+  </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import MainLayout from './layouts/MainLayout.vue';
 import HiddenCanvas from './components/HiddenCanvas.vue';
 import { initTheme } from './composables/useTheme';
+import { useSDK } from './composables/useSDK';
+import logoUrl from './assets/logo.png';
 
 initTheme();
+
+const { isInitialized, error } = useSDK();
+
+const appVersion = __APP_VERSION__;
+
+const showLoader = computed(() => !isInitialized.value && !error.value);
 </script>
+
+<style scoped>
+.app-version {
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  z-index: 99999;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.app-logo {
+  position: fixed;
+  top: -4px;
+  left: -18px;
+  z-index: 99999;
+  height: 179px;
+  width: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 14px rgba(99, 102, 241, 0.3));
+}
+
+@media (max-width: 768px) {
+  .app-logo {
+    top: 12px;
+    left: 12px;
+    height: 64px;
+  }
+}
+
+.app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: var(--bg-primary);
+}
+
+.app-loader-logo {
+  width: 360px;
+  max-width: 70vw;
+  height: auto;
+  filter: drop-shadow(0 8px 32px rgba(99, 102, 241, 0.4));
+  animation: app-loader-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes app-loader-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+</style>
 
 <style>
 /* Global styles - Education Platform Theme */
@@ -21,7 +98,7 @@ initTheme();
 
 :root {
   /* Light theme - Vibrant Education Colors */
-  --bg-primary: #f0f4ff;
+  --bg-primary: #c9d2eb;
   --bg-secondary: #ffffff;
   --text-primary: #1e1e3f;
   --text-secondary: #6b7280;
@@ -54,8 +131,8 @@ initTheme();
 
 .dark {
   /* Dark theme - Vibrant Education Colors */
-  --bg-primary: #0f0f23;
-  --bg-secondary: #1a1a2e;
+  --bg-primary: #06061a;
+  --bg-secondary: #14142a;
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --border-color: rgba(99, 102, 241, 0.25);
