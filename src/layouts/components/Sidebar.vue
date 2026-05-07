@@ -99,9 +99,16 @@ const isActive = (path: string) => {
 .sidebar-wrapper {
   position: fixed;
   left: 0;
-  top: 25px;
-  height: calc(100vh - 50px);
+  top: 130px;
+  height: calc(100vh - 200px);
   z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    top: 90px;
+    height: calc(100vh - 110px);
+  }
 }
 
 .sidebar-hover-area {
@@ -134,8 +141,12 @@ const isActive = (path: string) => {
 }
 
 @keyframes glow {
-  from { box-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
-  to { box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
+  from {
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+  }
 }
 
 .sidebar-wrapper:hover .sidebar-hover-area::before {
@@ -147,6 +158,7 @@ const isActive = (path: string) => {
   position: absolute;
   left: 0;
   top: 50%;
+  max-height: 100%;
   background: var(--bg-secondary);
   border-right: 2px solid var(--border-color);
   padding: 24px 16px;
@@ -264,5 +276,16 @@ const isActive = (path: string) => {
     var(--accent-pink, #ec4899) 100%
   );
   box-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+}
+
+@media (min-width: 701px) {
+  .sidebar-hover-area {
+    display: none;
+  }
+
+  .sidebar,
+  .sidebar-wrapper:hover .sidebar {
+    transform: translateX(0) translateY(-50%) perspective(1200px) rotateY(0deg);
+  }
 }
 </style>

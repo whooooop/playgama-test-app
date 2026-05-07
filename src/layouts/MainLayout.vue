@@ -106,8 +106,15 @@ const { isInitialized } = useSDK();
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.02); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
 }
 
 .dark .loading-message {
@@ -132,6 +139,12 @@ const { isInitialized } = useSDK();
   .main-content {
     padding: 16px;
     padding-left: 40px;
+  }
+}
+
+@media (min-width: 701px) {
+  .main-content {
+    padding-left: 290px;
   }
 }
 </style>
