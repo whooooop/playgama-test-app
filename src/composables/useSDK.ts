@@ -1,19 +1,10 @@
 import { ref, computed, watch } from 'vue';
+import { availableVersions } from 'virtual:available-versions';
 
 const STORAGE_VERSION_KEY = 'sdk-version';
 const STORAGE_CUSTOM_URL_KEY = 'sdk-custom-url';
 
-export const availableVersions = [
-  'v1.23.0',
-  'v1.24.0',
-  'v1.25.0',
-  'v1.26.0',
-  'v1.27.0',
-  'v1.27.1',
-  'v1.28.0',
-  'v1.29.0',
-  'v1.30.0',
-];
+export { availableVersions };
 
 // Singleton state for bridge
 let globalBridgeState = {
@@ -100,6 +91,7 @@ export function useSDK() {
     }
 
     try {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       await window.bridge.initialize({
         configFilePath: './config.json',
       });
