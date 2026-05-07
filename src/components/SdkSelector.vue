@@ -1,46 +1,49 @@
 <template>
-  <Section title="SDK Selector">
-    <template #header v-if="currentSdkVersion || error || loading">
-      <div class="status-info">
-        <div v-if="loading" class="loading">⏳ Загрузка SDK...</div>
-        <div v-if="currentSdkVersion" class="current-sdk">
-          ✅ {{ currentSdkVersion }}
+  <Section title="SDK Selector" class="sdk-selector-section">
+    <template #header>
+      <div class="header-controls">
+        <div class="selector-row">
+          <div class="version-selector">
+            <select v-model="selectedVersion" @change="onVersionChange">
+              <option value="">-- SDK Version --</option>
+              <option
+                v-for="version in availableVersions"
+                :key="version"
+                :value="version"
+              >
+                {{ version }}
+              </option>
+              <option value="custom">Custom URL</option>
+            </select>
+          </div>
+
+          <div v-if="selectedVersion === 'custom'" class="custom-url">
+            <input
+              type="text"
+              v-model="customUrl"
+              placeholder="URL SDK..."
+              @input="onCustomUrlChange"
+            />
+          </div>
+
+          <button
+            @click="loadSdk"
+            :disabled="!canLoadSdk || loading"
+            class="load-btn"
+          >
+            {{ loading ? '⏳' : '🚀' }}
+          </button>
         </div>
-        <div v-if="error" class="error">❌ {{ error }}</div>
+
+        <div v-if="currentSdkVersion || error || loading" class="status-info">
+          <div v-if="loading" class="loading">⏳ Loading SDK...</div>
+          <div v-if="currentSdkVersion" class="current-sdk">
+            ✅ {{ currentSdkVersion }}
+          </div>
+          <div v-if="error" class="error">❌ {{ error }}</div>
+        </div>
       </div>
     </template>
-    <div class="selector-row">
-      <div class="version-selector">
-        <select v-model="selectedVersion" @change="onVersionChange">
-          <option value="">-- SDK версия --</option>
-          <option
-            v-for="version in availableVersions"
-            :key="version"
-            :value="version"
-          >
-            {{ version }}
-          </option>
-          <option value="custom">Custom URL</option>
-        </select>
-      </div>
-
-      <div v-if="selectedVersion === 'custom'" class="custom-url">
-        <input
-          type="text"
-          v-model="customUrl"
-          placeholder="Введите URL SDK..."
-          @input="onCustomUrlChange"
-        />
-      </div>
-
-      <button
-        @click="loadSdk"
-        :disabled="!canLoadSdk || loading"
-        class="load-btn"
-      >
-        {{ loading ? '⏳' : '🚀' }}
-      </button>
-    </div>
   </Section>
 </template>
 
@@ -82,11 +85,29 @@ const onCustomUrlChange = () => {
 </script>
 
 <style scoped>
+.sdk-selector-section :deep(.section) {
+  padding: 20px 32px;
+}
+
+.sdk-selector-section :deep(.section-header) {
+  margin-bottom: 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .selector-row {
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .version-selector select,
@@ -117,7 +138,7 @@ const onCustomUrlChange = () => {
 .custom-url input:focus {
   outline: none;
   border-color: var(--accent-primary, #6366f1);
-  box-shadow: 
+  box-shadow:
     0 0 0 3px rgba(99, 102, 241, 0.15),
     0 0 20px rgba(99, 102, 241, 0.1);
 }
@@ -143,7 +164,10 @@ const onCustomUrlChange = () => {
   font-size: 1.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: var(--gradient-success, linear-gradient(135deg, #22c55e 0%, #14b8a6 100%));
+  background: var(
+    --gradient-success,
+    linear-gradient(135deg, #22c55e 0%, #14b8a6 100%)
+  );
   color: white;
   min-width: 48px;
   box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
@@ -180,14 +204,16 @@ const onCustomUrlChange = () => {
 }
 
 .status-info {
-  display: inline-block;
   font-size: 0.9em;
-  margin-left: 12px;
 }
 
 .loading {
   color: var(--accent-orange, #f59e0b);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.15) 0%,
+    rgba(251, 191, 36, 0.15) 100%
+  );
   padding: 6px 12px;
   border-radius: 8px;
   display: inline-block;
@@ -196,20 +222,33 @@ const onCustomUrlChange = () => {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .dark .loading {
   color: var(--accent-yellow, #fde047);
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(253, 224, 71, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.15) 0%,
+    rgba(253, 224, 71, 0.15) 100%
+  );
   border: 1px solid rgba(251, 191, 36, 0.3);
   box-shadow: 0 0 15px rgba(251, 191, 36, 0.15);
 }
 
 .current-sdk {
   color: var(--accent-green, #22c55e);
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(20, 184, 166, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.15) 0%,
+    rgba(20, 184, 166, 0.15) 100%
+  );
   padding: 6px 12px;
   border-radius: 8px;
   display: inline-block;
@@ -218,14 +257,22 @@ const onCustomUrlChange = () => {
 
 .dark .current-sdk {
   color: var(--accent-green, #4ade80);
-  background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(45, 212, 191, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(74, 222, 128, 0.15) 0%,
+    rgba(45, 212, 191, 0.15) 100%
+  );
   border: 1px solid rgba(74, 222, 128, 0.3);
   box-shadow: 0 0 15px rgba(74, 222, 128, 0.15);
 }
 
 .error {
   color: var(--accent-red, #ef4444);
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.15) 0%,
+    rgba(236, 72, 153, 0.15) 100%
+  );
   padding: 6px 12px;
   border-radius: 8px;
   display: inline-block;
@@ -234,15 +281,27 @@ const onCustomUrlChange = () => {
 
 .dark .error {
   color: var(--accent-red, #f87171);
-  background: linear-gradient(135deg, rgba(248, 113, 113, 0.15) 0%, rgba(244, 114, 182, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(248, 113, 113, 0.15) 0%,
+    rgba(244, 114, 182, 0.15) 100%
+  );
   border: 1px solid rgba(248, 113, 113, 0.3);
   box-shadow: 0 0 15px rgba(248, 113, 113, 0.15);
 }
 
 @media (max-width: 768px) {
+  .sdk-selector-section :deep(.section) {
+    padding: 16px 20px;
+  }
+
+  .header-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .selector-row {
-    flex-direction: column;
-    align-items: stretch;
+    flex-wrap: wrap;
   }
 
   .version-selector select,
