@@ -6,7 +6,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
-let intervalId: number | undefined;
+let rafId: number | undefined;
 
 onMounted(() => {
   const canvas = canvasRef.value;
@@ -17,6 +17,10 @@ onMounted(() => {
 
   const number = Math.floor(Math.random() * 900 + 100);
 
+  let hue = Math.random() * 360;
+  let x = 0;
+  const speed = 1.5;
+
   const resize = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -24,23 +28,28 @@ onMounted(() => {
   resize();
   window.addEventListener('resize', resize);
 
-  intervalId = window.setInterval(() => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    ctx.fillStyle = `rgb(${r},${g},${b})`;
+  const draw = () => {
+    hue = (hue + 0.5) % 360;
+
+    ctx.fillStyle = `hsl(${hue}, 70%, 50%)`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    x = (x + speed) % canvas.width;
 
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 120px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(String(number), canvas.width / 2, canvas.height / 2);
-  }, 200);
+    ctx.fillText(String(number), x, canvas.height / 2);
+
+    rafId = requestAnimationFrame(draw);
+  };
+
+  rafId = requestAnimationFrame(draw);
 });
 
 onUnmounted(() => {
-  if (intervalId !== undefined) clearInterval(intervalId);
+  if (rafId !== undefined) cancelAnimationFrame(rafId);
 });
 </script>
 
