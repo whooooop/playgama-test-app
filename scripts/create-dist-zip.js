@@ -9,7 +9,7 @@ function createDistZip() {
     const zipPath = path.join(
       __dirname,
       '..',
-      `dist/build-${packageJson.version}.zip`
+      `build-${packageJson.version}.zip`
     );
 
     if (!fs.existsSync(distPath)) {
