@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, shallowRef, markRaw } from 'vue';
 import { availableVersions } from 'virtual:available-versions';
 
 const STORAGE_VERSION_KEY = 'sdk-version';
@@ -8,7 +8,7 @@ export { availableVersions };
 
 // Singleton state for bridge
 let globalBridgeState = {
-  bridge: ref<any>(null),
+  bridge: shallowRef<any>(null),
   isInitialized: ref<boolean>(false),
   selectedVersion: ref<string>(''),
   customUrl: ref<string>(''),
@@ -95,7 +95,7 @@ export function useSDK() {
       await window.bridge.initialize({
         configFilePath: './config.json',
       });
-      bridge.value = window.bridge;
+      bridge.value = markRaw(window.bridge);
       isInitialized.value = true;
       console.log('Bridge initialized successfully');
 
