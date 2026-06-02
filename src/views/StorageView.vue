@@ -1,343 +1,74 @@
 <template>
-  <Section title="Storage">
-    <InfoGrid>
-      <InfoItem
-        label="Is LocalStorage Supported:"
-        :value="isLocalStorageSupported"
-      />
-      <InfoItem
-        label="Is LocalStorage Available:"
-        :value="isLocalStorageAvailable"
-      />
-      <InfoItem
-        label="Is PlatformInternal Supported:"
-        :value="isPlatformInternalSupported"
-      />
-      <InfoItem
-        label="Is PlatformInternal Available:"
-        :value="isPlatformInternalAvailable"
-      />
-      <InfoItem label="Default Storage Type:" :value="defaultStorageType" />
-    </InfoGrid>
-
-    <SubSection title="Storage Actions">
-      <InputGroup>
-        <Input v-model="coinsValue" placeholder="Coins" />
-        <Input v-model="levelValue" placeholder="Level" />
-      </InputGroup>
-
-      <Select v-model="storageType">
-        <option value="default">Default</option>
-        <option value="local_storage">LocalStorage</option>
-        <option value="platform_internal">PlatformInternal</option>
-      </Select>
-
-      <ButtonGroup>
-        <Button @click="getStorageData">Get Data</Button>
-        <Button @click="setStorageData">Set Data</Button>
-        <Button @click="deleteStorageData">Delete Data</Button>
-      </ButtonGroup>
-
-      <InfoItem v-if="storageStatus" label="Status:" :value="storageStatus" />
-    </SubSection>
-
-    <SubSection title="Single Key Operations">
-      <InputGroup>
-        <Input v-model="singleKey" placeholder="Key" />
-        <Input v-model="singleValue" placeholder="Value" />
-      </InputGroup>
-
-      <ButtonGroup>
-        <Button @click="getSingleKey" :disabled="!singleKey">
-          Get Single Key
-        </Button>
-        <Button @click="setSingleKey" :disabled="!singleKey">
-          Set Single Key
-        </Button>
-        <Button @click="deleteSingleKey" :disabled="!singleKey">
-          Delete Single Key
-        </Button>
-      </ButtonGroup>
-
-      <div v-if="singleKeyResult">
-        <InfoItem label="Single Key Result:" :value="''" />
-        <CodeBlock>{{ singleKeyResult }}</CodeBlock>
-      </div>
-    </SubSection>
-
-    <SubSection title="Multiple Keys Operations">
-      <InputGroup>
-        <Input v-model="multipleKeys" placeholder="Keys (comma separated)" />
-        <Input
-          v-model="multipleValues"
-          placeholder="Values (comma separated)"
-        />
-      </InputGroup>
-
-      <ButtonGroup>
-        <Button @click="getMultipleKeys" :disabled="!multipleKeys">
-          Get Multiple Keys
-        </Button>
-        <Button @click="setMultipleKeys" :disabled="!multipleKeys">
-          Set Multiple Keys
-        </Button>
-        <Button @click="deleteMultipleKeys" :disabled="!multipleKeys">
-          Delete Multiple Keys
-        </Button>
-      </ButtonGroup>
-
-      <div v-if="multipleKeysResult">
-        <InfoItem label="Multiple Keys Result:" :value="''" />
-        <CodeBlock>{{ multipleKeysResult }}</CodeBlock>
-      </div>
-    </SubSection>
-  </Section>
+  <StorageViewV2 v-if="effectiveApi === 'v2'" />
+  <StorageViewV1 v-else />
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import InfoItem from '../components/InfoItem.vue';
+import { computed } from 'vue';
 import Section from '../components/Section.vue';
-import SubSection from '../components/SubSection.vue';
-import Button from '../components/Button.vue';
-import CodeBlock from '../components/CodeBlock.vue';
-import InfoGrid from '../components/InfoGrid.vue';
-import Input from '../components/Input.vue';
-import InputGroup from '../components/InputGroup.vue';
-import ButtonGroup from '../components/ButtonGroup.vue';
-import Select from '../components/Select.vue';
+import StorageViewV1 from './StorageViewV1.vue';
+import StorageViewV2 from './StorageViewV2.vue';
+import { useSDK } from '../composables/useSDK';
+import { isLatestVersion } from '../utils/version';
 
+// The storage module was redesigned in this version — anything >= it uses the
+// v2 panel (get/set/delete only), anything below uses the v1 panel.
+const STORAGE_V2_MIN_VERSION = '2.0.0';
+
+const { currentSdkVersion } = useSDK();
 const bridge = computed(() => window.bridge);
 
-const isLocalStorageSupported = computed(() => {
-  if (!bridge.value) return null;
-  return bridge.value.storage.isSupported(
-    bridge.value.STORAGE_TYPE.LOCAL_STORAGE
-  );
-});
-
-const isLocalStorageAvailable = computed(() => {
-  if (!bridge.value) return null;
-  return bridge.value.storage.isAvailable(
-    bridge.value.STORAGE_TYPE.LOCAL_STORAGE
-  );
-});
-
-const isPlatformInternalSupported = computed(() => {
-  if (!bridge.value) return null;
-  return bridge.value.storage.isSupported(
-    bridge.value.STORAGE_TYPE.PLATFORM_INTERNAL
-  );
-});
-
-const isPlatformInternalAvailable = computed(() => {
-  if (!bridge.value) return null;
-  return bridge.value.storage.isAvailable(
-    bridge.value.STORAGE_TYPE.PLATFORM_INTERNAL
-  );
-});
-
-const defaultStorageType = computed(() => {
-  if (!bridge.value) return null;
-  return bridge.value.storage.defaultType;
-});
-
-const coinsValue = ref('');
-const levelValue = ref('');
-const storageType = ref('default');
-const storageStatus = ref('');
-
-const singleKey = ref('');
-const singleValue = ref('');
-const singleKeyResult = ref('');
-
-const multipleKeys = ref('');
-const multipleValues = ref('');
-const multipleKeysResult = ref('');
-
-const getStorageData = async () => {
-  if (!bridge.value) return;
-
-  try {
-    storageStatus.value = 'Getting data...';
-    console.log(
-      '🔍 Getting storage data:',
-      ['coins', 'level'],
-      storageType.value
-    );
-
-    const type =
-      storageType.value === 'default' ? undefined : storageType.value;
-    const data = await bridge.value.storage.get(['coins', 'level'], type);
-
-    console.log('✅ Storage data received:', data);
-
-    if (data) {
-      coinsValue.value = data[0] || '';
-      levelValue.value = data[1] || '';
-      storageStatus.value = 'Data retrieved successfully';
-    } else {
-      storageStatus.value = 'No data found';
+// Pick a comparable version string: the bridge instance is the most accurate
+// (covers custom URL builds), falling back to the selected SDK version. Returns
+// null for non-numeric values like "Custom URL".
+const resolvedVersion = computed<string | null>(() => {
+  const candidates = [bridge.value?.version, currentSdkVersion.value];
+  for (const candidate of candidates) {
+    if (typeof candidate === 'string' && /^v?\d/.test(candidate.trim())) {
+      return candidate.trim();
     }
-  } catch (error: any) {
-    console.error('❌ Get Storage Data Error:', error);
-    storageStatus.value = 'Error getting data: ' + error.message;
   }
-};
+  return null;
+});
 
-const setStorageData = async () => {
-  if (!bridge.value) return;
-
-  try {
-    storageStatus.value = 'Setting data...';
-    console.log(
-      '💾 Setting storage data:',
-      ['coins', 'level'],
-      [coinsValue.value, levelValue.value],
-      storageType.value
-    );
-
-    const type =
-      storageType.value === 'default' ? undefined : storageType.value;
-    await bridge.value.storage.set(
-      ['coins', 'level'],
-      [coinsValue.value, levelValue.value],
-      type
-    );
-
-    console.log('✅ Storage data saved successfully');
-    storageStatus.value = 'Data saved successfully';
-  } catch (error: any) {
-    console.error('❌ Set Storage Data Error:', error);
-    storageStatus.value = 'Error saving data: ' + error.message;
+const effectiveApi = computed<'v1' | 'v2'>(() => {
+  const version = resolvedVersion.value;
+  if (version) {
+    return isLatestVersion(version, STORAGE_V2_MIN_VERSION) ? 'v2' : 'v1';
   }
-};
 
-const deleteStorageData = async () => {
-  if (!bridge.value) return;
-
-  try {
-    storageStatus.value = 'Deleting data...';
-    console.log(
-      '🗑️ Deleting storage data:',
-      ['coins', 'level'],
-      storageType.value
-    );
-
-    const type =
-      storageType.value === 'default' ? undefined : storageType.value;
-    await bridge.value.storage.delete(['coins', 'level'], type);
-
-    console.log('✅ Storage data deleted successfully');
-    coinsValue.value = '';
-    levelValue.value = '';
-    storageStatus.value = 'Data deleted successfully';
-  } catch (error: any) {
-    console.error('❌ Delete Storage Data Error:', error);
-    storageStatus.value = 'Error deleting data: ' + error.message;
+  // Version unknown (e.g. a custom build without a version getter): fall back to
+  // capability sniffing. v1 exposes the STORAGE_TYPE enum + per-type capability
+  // checks on the storage module; v2 removed both, leaving only get/set/delete.
+  const b = bridge.value;
+  if (b?.STORAGE_TYPE && typeof b?.storage?.isSupported === 'function') {
+    return 'v1';
   }
-};
-
-const getSingleKey = async () => {
-  if (!bridge.value || !singleKey.value) return;
-
-  try {
-    console.log('🔍 Getting single key:', singleKey.value);
-
-    const data = await bridge.value.storage.get(singleKey.value);
-
-    console.log('✅ Single key data received:', data);
-    singleKeyResult.value = JSON.stringify(data, null, 2);
-  } catch (error: any) {
-    console.error('❌ Get Single Key Error:', error);
-    singleKeyResult.value = 'Error: ' + error.message;
-  }
-};
-
-const setSingleKey = async () => {
-  if (!bridge.value || !singleKey.value) return;
-
-  try {
-    console.log('💾 Setting single key:', singleKey.value, singleValue.value);
-
-    await bridge.value.storage.set([singleKey.value], [singleValue.value]);
-
-    console.log('✅ Single key saved successfully');
-    singleKeyResult.value = 'Key saved successfully';
-  } catch (error: any) {
-    console.error('❌ Set Single Key Error:', error);
-    singleKeyResult.value = 'Error: ' + error.message;
-  }
-};
-
-const deleteSingleKey = async () => {
-  if (!bridge.value || !singleKey.value) return;
-
-  try {
-    console.log('🗑️ Deleting single key:', singleKey.value);
-
-    await bridge.value.storage.delete(singleKey.value);
-
-    console.log('✅ Single key deleted successfully');
-    singleKeyResult.value = 'Key deleted successfully';
-    singleValue.value = '';
-  } catch (error: any) {
-    console.error('❌ Delete Single Key Error:', error);
-    singleKeyResult.value = 'Error: ' + error.message;
-  }
-};
-
-const getMultipleKeys = async () => {
-  if (!bridge.value || !multipleKeys.value) return;
-
-  try {
-    const keys = multipleKeys.value.split(',').map(key => key.trim());
-    console.log('🔍 Getting multiple keys:', keys);
-
-    const data = await bridge.value.storage.get(keys);
-
-    console.log('✅ Multiple keys data received:', data);
-    multipleKeysResult.value = JSON.stringify(data, null, 2);
-  } catch (error: any) {
-    console.error('❌ Get Multiple Keys Error:', error);
-    multipleKeysResult.value = 'Error: ' + error.message;
-  }
-};
-
-const setMultipleKeys = async () => {
-  if (!bridge.value || !multipleKeys.value) return;
-
-  try {
-    const keys = multipleKeys.value.split(',').map(key => key.trim());
-    const values = multipleValues.value.split(',').map(value => value.trim());
-
-    console.log('💾 Setting multiple keys:', keys, values);
-
-    await bridge.value.storage.set(keys, values);
-
-    console.log('✅ Multiple keys saved successfully');
-    multipleKeysResult.value = 'Keys saved successfully';
-  } catch (error: any) {
-    console.error('❌ Set Multiple Keys Error:', error);
-    multipleKeysResult.value = 'Error: ' + error.message;
-  }
-};
-
-const deleteMultipleKeys = async () => {
-  if (!bridge.value || !multipleKeys.value) return;
-
-  try {
-    const keys = multipleKeys.value.split(',').map(key => key.trim());
-    console.log('🗑️ Deleting multiple keys:', keys);
-
-    await bridge.value.storage.delete(keys);
-
-    console.log('✅ Multiple keys deleted successfully');
-    multipleKeysResult.value = 'Keys deleted successfully';
-    multipleValues.value = '';
-  } catch (error: any) {
-    console.error('❌ Delete Multiple Keys Error:', error);
-    multipleKeysResult.value = 'Error: ' + error.message;
-  }
-};
+  return 'v2';
+});
 </script>
+
+<style scoped>
+.storage-badge {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+}
+
+.storage-badge--v2 {
+  border-color: rgba(99, 102, 241, 0.4);
+  color: var(--accent-primary, #6366f1);
+}
+
+.storage-empty {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+</style>
