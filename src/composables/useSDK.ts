@@ -91,7 +91,7 @@ export function useSDK() {
     }
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       await window.bridge.initialize({
         configFilePath: './config.json',
       });
