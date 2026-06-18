@@ -55,14 +55,21 @@
   "payments": [
     {
       "id": "1",
-      "amount": "1000",
-      "priceCurrencyCode": "Gam",
-      "externalId": "external-from-config"
+      "playgama": {
+        "amount": "100"
+      }
     },
     {
       "id": "2",
-      "amount": "2000",
-      "priceCurrencyCode": "Gam"
+      "playgama": {
+        "amount": "200"
+      }
+    },
+    {
+      "id": "3",
+      "playgama": {
+        "amount": 300
+      }
     }
   ],
   "leaderboards": [
